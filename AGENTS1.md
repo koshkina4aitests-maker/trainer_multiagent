@@ -110,6 +110,71 @@ Do not skip step 1 unless all major uncertainties are resolved.
 
 ---
 
+## Consolidated Answers (Round 1, validated)
+
+Source: business customer responses (RU), consolidated for architecture handoff.
+
+### A. Business Goals and Success Criteria
+1. **Primary goal for v1**: family and friends use the app for one month to log and plan workouts.
+2. **Success criteria (3-6 months)**: all target users actively use the app and report satisfaction.
+3. **Monetization in v1**: none.
+
+### B. User Segments and Context
+4. **In-scope segments**: beginners and intermediate users, age 25-55, early-stage athletes.
+5. **User roles in v1**: end users only (no coach/trainer role).
+6. **Workout context**: both home workouts and gym workouts are in scope.
+
+### C. Health and Safety Constraints
+7. **Explicitly supported conditions in v1**:
+   - back pain,
+   - joint pain (including knees),
+   - hypothyroidism.
+8. **Medical data input in v1**: manual entry only.
+   Future direction: integration with fitness wearables/bracelets.
+9. **Safety capability required**: yes.
+   Required components:
+   - risk assessment,
+   - warnings,
+   - emergency instructions flow.
+
+### D. Recommendation Logic
+10. **Recommendation approach**: hybrid (rules + AI).
+11. **Recommendation refresh frequency**: on user request, including pre-workout update when current condition is entered.
+12. **Recommendation input parameters**:
+   - confirmed: heart-rate recovery between sets,
+   - baseline set not fully specified yet (open item).
+
+### Open Items Remaining from Round 1
+- Q13 optimization priority (safety vs progress speed vs adherence vs balanced score).
+- Q14 tracked workout entities (minimum required data model).
+- Q15 predefined programs vs custom programs vs both.
+- Q16 progression logic (load increase, deload, recovery days).
+- Q17 logging effort preference (minimal taps vs detailed).
+- Q18 recommendation explainability requirement.
+- Q19 motivation features (reminders/streaks/gamification).
+- Q20 target geographies and compliance scope.
+- Q21 legal positioning (wellness support vs medical advice).
+- Q22 security requirements.
+- Q23 target platforms (iOS/Android/web).
+- Q24 integrations needed in v1 (if any).
+- Q25 offline mode requirement.
+- Q26-28 MVP boundaries, accessibility/multilingual, admin reporting.
+
+---
+
+## Clarifying Questions (Round 2, Priority for Architecture)
+
+1. **Optimization priority**: should recommendation logic prioritize safety first, adherence first, progress first, or a balanced score?
+2. **Minimum workout log schema for MVP**: which fields are mandatory per session (exercise name, sets/reps/weight, duration, pain flag, pulse values, etc.)?
+3. **Program model**: predefined programs, custom user-created programs, or both in MVP?
+4. **Platform scope**: what is the MVP target (mobile only, web only, or both)?
+5. **Legal framing**: should we explicitly position the app as wellness support and not medical advice?
+6. **MVP boundaries**: list top in-scope features and explicit out-of-scope items for release 1.
+7. **Explainability**: do users need a clear "why this workout is recommended" explanation in MVP?
+8. **Critical compliance locale**: which country/region is first launch target?
+
+---
+
 ## Architect-Ready Artifact Set (Expected Outputs)
 
 After clarifications are answered, produce these artifacts:
