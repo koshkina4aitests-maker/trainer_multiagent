@@ -141,37 +141,59 @@ Source: business customer responses (RU), consolidated for architecture handoff.
 10. **Recommendation approach**: hybrid (rules + AI).
 11. **Recommendation refresh frequency**: on user request, including pre-workout update when current condition is entered.
 12. **Recommendation input parameters**:
-   - confirmed: heart-rate recovery between sets,
-   - baseline set not fully specified yet (open item).
+   - confirmed: heart-rate recovery between sets.
+13. **Recommendation optimization priority**: balanced score (safety, adherence, progress in balance).
+
+### E. Training Model and Tracking
+14. **Minimum workout log schema (MVP, mandatory fields)**:
+   - exercise,
+   - number of sets,
+   - reps per set,
+   - weight,
+   - RIR.
+15. **Program model in MVP**: both predefined and custom user-created programs.
+
+### F. Personalization and UX
+18. **Recommendation explainability in MVP**: required ("why this workout is recommended").
+
+### G. Compliance, Privacy, and Legal
+21. **Legal framing**: wellness support (not positioned as medical advice).
+20. **Initial launch locale**: Russian Federation (RF).
+
+### H. Platform and Integrations
+23. **Platform scope for MVP**: web application with adaptive responsive layout.
+24. **Integrations in MVP**: Google authentication is in scope.
+
+### I. Delivery Scope
+26. **MVP in-scope features**:
+   - Google authentication,
+   - manual workout creation/planning,
+   - workout history storage,
+   - workout recommendations based on workout history and current condition analysis,
+   - add exercises to exercise database.
 
 ### Open Items Remaining from Round 1
-- Q13 optimization priority (safety vs progress speed vs adherence vs balanced score).
-- Q14 tracked workout entities (minimum required data model).
-- Q15 predefined programs vs custom programs vs both.
 - Q16 progression logic (load increase, deload, recovery days).
 - Q17 logging effort preference (minimal taps vs detailed).
-- Q18 recommendation explainability requirement.
 - Q19 motivation features (reminders/streaks/gamification).
-- Q20 target geographies and compliance scope.
-- Q21 legal positioning (wellness support vs medical advice).
 - Q22 security requirements.
-- Q23 target platforms (iOS/Android/web).
-- Q24 integrations needed in v1 (if any).
 - Q25 offline mode requirement.
-- Q26-28 MVP boundaries, accessibility/multilingual, admin reporting.
+- Q26 explicit out-of-scope items for MVP (still not listed).
+- Q27 accessibility and multilingual requirements.
+- Q28 reporting/dashboard requirements for admin/business users.
 
 ---
 
-## Clarifying Questions (Round 2, Priority for Architecture)
+## Clarifying Questions (Round 3, Remaining for Architecture)
 
-1. **Optimization priority**: should recommendation logic prioritize safety first, adherence first, progress first, or a balanced score?
-2. **Minimum workout log schema for MVP**: which fields are mandatory per session (exercise name, sets/reps/weight, duration, pain flag, pulse values, etc.)?
-3. **Program model**: predefined programs, custom user-created programs, or both in MVP?
-4. **Platform scope**: what is the MVP target (mobile only, web only, or both)?
-5. **Legal framing**: should we explicitly position the app as wellness support and not medical advice?
-6. **MVP boundaries**: list top in-scope features and explicit out-of-scope items for release 1.
-7. **Explainability**: do users need a clear "why this workout is recommended" explanation in MVP?
-8. **Critical compliance locale**: which country/region is first launch target?
+1. **Progression logic**: do we need explicit progression rules in MVP (load increase, deload, recovery days), or defer to post-MVP?
+2. **Logging effort model**: should data entry be optimized for minimal taps, or is detailed logging acceptable as default?
+3. **Motivation features**: include reminders/streaks/gamification in MVP or post-MVP?
+4. **Security baseline**: besides Google auth, any mandatory controls (2FA, audit trail, account recovery constraints, data retention)?
+5. **Offline capability**: should workout logging/review work without internet in MVP?
+6. **Explicit out-of-scope**: please list features that are intentionally excluded from MVP.
+7. **Accessibility and language**: minimum accessibility standard and whether Russian-only UI is acceptable for MVP.
+8. **Admin/reporting needs**: do business/admin users need dashboards or exports in MVP?
 
 ---
 
