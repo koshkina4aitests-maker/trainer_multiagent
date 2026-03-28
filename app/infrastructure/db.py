@@ -18,6 +18,13 @@ engine = create_engine(
 SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False, class_=Session)
 
 
+def init_db() -> None:
+    # Import models so SQLAlchemy metadata includes all tables before create_all.
+    from app.domain import models  # noqa: F401
+
+    Base.metadata.create_all(bind=engine)
+
+
 def get_db_session() -> Iterator[Session]:
     session = SessionLocal()
     try:

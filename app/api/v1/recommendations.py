@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, Header, HTTPException, status
 from sqlalchemy.orm import Session
 
-from app.api.dependencies import get_db
+from app.api.dependencies import get_current_user, get_db
 from app.domain.models import IdempotencyKey
 from app.schemas.recommendations import RecommendationRequest, RecommendationResponse
 from app.services.recommendation_service import RecommendationService
@@ -28,7 +28,10 @@ def generate_recommendation(
     payload: RecommendationRequest,
     idempotency_key: str | None = Header(default=None, alias="Idempotency-Key"),
     db: Session = Depends(get_db),
+    current_user=Depends(get_current_user),
 ) -> RecommendationResponse:
+    if current_user.id != user_id:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
     _guard_idempotency(db, idempotency_key, "generate_recommendation")
     recommendation = RecommendationService(db).generate_for_user(user_id=user_id, current_condition=payload.current_condition)
     return RecommendationResponse(
