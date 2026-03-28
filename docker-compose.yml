@@ -16,6 +16,8 @@ services:
     env_file: .env.production
     ports:
       - "8000:8000"
+    volumes:
+      - sqlite_data:/opt/fitness-app/data
     depends_on:
       redis:
         condition: service_healthy
@@ -31,9 +33,12 @@ services:
     restart: unless-stopped
     command: ["celery", "-A", "app.workers.celery_app", "worker", "--loglevel=info"]
     env_file: .env.production
+    volumes:
+      - sqlite_data:/opt/fitness-app/data
     depends_on:
       redis:
         condition: service_healthy
 
 volumes:
   redis_data:
+  sqlite_data:
