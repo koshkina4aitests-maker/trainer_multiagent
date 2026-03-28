@@ -12,4 +12,10 @@
 2026-03-28T12:35:00Z | iter-01 | DevOps | SSH secret handling | done | authorized-owner channel | secret cleanup confirmation | none | Technical PM
 2026-03-28T12:50:00Z | iter-01 | UX Tester | Final UX regression | done | devops-pipeline-iter01.md | ux-final-iter01.md | minor discoverability issues | Business Analyst
 2026-03-28T12:55:00Z | iter-01 | Technical PM | Iteration closure | done | all iter-01 artifacts | iteration-close-note-iter01 | none | Business Analyst
+2026-03-28T13:10:00Z | iter-02 | UX Tester | UX backlog promotion | done | ux-final-iter01.md | ux-report-iter02.md | none | Business Analyst
+2026-03-28T13:20:00Z | iter-02 | Business Analyst | Requirements update | done | ux-report-iter02.md | requirements-iter02.md | none | Architect
+2026-03-28T13:35:00Z | iter-02 | Architect | Architecture refinement | done | requirements-iter02.md | architecture-iter02.md | none | Backend + Frontend
+2026-03-28T13:50:00Z | iter-02 | Designer | Interaction prototype updates | done | requirements-iter02.md, architecture-iter02.md | frontend-design-iter02.md | none | Frontend
+2026-03-28T14:00:00Z | iter-02 | Backend | Implementation status | done | requirements-iter02.md, architecture-iter02.md | backend-status-iter02.md | none | DevOps
+2026-03-28T14:00:00Z | iter-02 | Frontend | Implementation status | done | requirements-iter02.md, architecture-iter02.md, frontend-design-iter02.md | frontend-status-iter02.md | none | DevOps
 ```
