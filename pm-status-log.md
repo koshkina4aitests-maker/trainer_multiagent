@@ -18,4 +18,8 @@
 2026-03-28T13:50:00Z | iter-02 | Designer | Interaction prototype updates | done | requirements-iter02.md, architecture-iter02.md | frontend-design-iter02.md | none | Frontend
 2026-03-28T14:00:00Z | iter-02 | Backend | Implementation status | done | requirements-iter02.md, architecture-iter02.md | backend-status-iter02.md | none | DevOps
 2026-03-28T14:00:00Z | iter-02 | Frontend | Implementation status | done | requirements-iter02.md, architecture-iter02.md, frontend-design-iter02.md | frontend-status-iter02.md | none | DevOps
+2026-03-28T14:20:00Z | iter-02 | DevOps | Pipeline + automated testing | done | backend-status-iter02.md, frontend-status-iter02.md | devops-pipeline-iter02.md | none | UX Tester
+2026-03-28T14:22:00Z | iter-02 | DevOps | SSH secret handling | done | authorized-owner channel | secret cleanup confirmation | none | Technical PM
+2026-03-28T14:35:00Z | iter-02 | UX Tester | Final UX regression | done | devops-pipeline-iter02.md | ux-final-iter02.md | none | Technical PM
+2026-03-28T14:40:00Z | iter-02 | Technical PM | Iteration closure | done | all iter-02 artifacts | iteration-close-note-iter02 | none | Business Analyst
 ```
