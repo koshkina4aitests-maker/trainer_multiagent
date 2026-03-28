@@ -30,6 +30,8 @@ class PlanRepositoryImpl implements PlanRepository {
       scheduledDate: workout.scheduledDate,
       exerciseNames: workout.exerciseNames,
       recommendationReason: workout.recommendationReason,
+      intensityLabel: workout.intensityLabel,
+      intensityReasonShort: workout.intensityReasonShort,
     );
     await _local.save(w);
     return w;
@@ -55,20 +57,31 @@ class PlanRepositoryImpl implements PlanRepository {
     String reason;
     List<String> exercises;
 
+    String intensityLabel;
+    String intensityReasonShort;
+
     if (readiness != null) {
       if (readiness.fatigue > 7 || readiness.soreness > 7) {
         reason = 'Высокая усталость — рекомендуется восстановительная тренировка';
         exercises = ['Лёгкое кардио', 'Стретчинг', 'Дыхательные упражнения'];
+        intensityLabel = 'easy';
+        intensityReasonShort = 'Снижена из-за высокого уровня усталости или болезненности мышц.';
       } else if (readiness.sleepQuality < 4) {
         reason = 'Недостаточный сон — рекомендована тренировка низкой интенсивности';
         exercises = ['Ходьба', 'Мобильность суставов', 'Планка'];
+        intensityLabel = 'easy';
+        intensityReasonShort = 'Снижена из-за недостаточного качества сна.';
       } else {
         reason = _buildReasonByGoal(goal, healthLimits);
         exercises = _buildExercisesByGoal(goal, healthLimits);
+        intensityLabel = _intensityByGoal(goal, readiness);
+        intensityReasonShort = _intensityReasonByGoal(goal, readiness);
       }
     } else {
       reason = _buildReasonByGoal(goal, healthLimits);
       exercises = _buildExercisesByGoal(goal, healthLimits);
+      intensityLabel = 'moderate';
+      intensityReasonShort = 'Стандартная нагрузка по вашему профилю и целям.';
     }
 
     return PlannedWorkout(
@@ -77,6 +90,8 @@ class PlanRepositoryImpl implements PlanRepository {
       scheduledDate: DateTime.now(),
       exerciseNames: exercises,
       recommendationReason: reason,
+      intensityLabel: intensityLabel,
+      intensityReasonShort: intensityReasonShort,
     );
   }
 
@@ -103,6 +118,19 @@ class PlanRepositoryImpl implements PlanRepository {
       default:
         return 'На основе вашего профиля и истории тренировок рекомендована сбалансированная тренировка.$limitNote';
     }
+  }
+
+  String _intensityByGoal(String goal, ReadinessData readiness) {
+    if (goal == 'Сила' && readiness.fatigue <= 4) return 'hard';
+    if (goal == 'Похудение') return 'moderate';
+    return 'moderate';
+  }
+
+  String _intensityReasonByGoal(String goal, ReadinessData readiness) {
+    if (goal == 'Сила' && readiness.fatigue <= 4) {
+      return 'Хорошая готовность — можно работать с повышенной нагрузкой.';
+    }
+    return 'Умеренная нагрузка соответствует вашей цели и текущей готовности.';
   }
 
   List<String> _buildExercisesByGoal(String goal, List<String> healthLimits) {

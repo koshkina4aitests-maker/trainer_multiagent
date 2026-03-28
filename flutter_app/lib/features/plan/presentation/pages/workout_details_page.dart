@@ -61,6 +61,13 @@ class WorkoutDetailsPage extends StatelessWidget {
                             const SizedBox(height: 4),
                             Text(workout.recommendationReason!,
                                 style: AppTextStyles.body.copyWith(color: AppColors.text)),
+                            if (workout.intensityLabel != null) ...[
+                              const SizedBox(height: 8),
+                              _IntensityChip(
+                                label: workout.intensityLabel!,
+                                reason: workout.intensityReasonShort,
+                              ),
+                            ],
                           ],
                         ),
                       ),
@@ -134,6 +141,85 @@ class WorkoutDetailsPage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _IntensityChip extends StatelessWidget {
+  final String label;
+  final String? reason;
+
+  const _IntensityChip({required this.label, this.reason});
+
+  Color _chipColor() {
+    switch (label) {
+      case 'easy':
+        return const Color(0xFF4CAF50);
+      case 'hard':
+        return const Color(0xFFF44336);
+      default:
+        return const Color(0xFFFF9800);
+    }
+  }
+
+  String _chipText() {
+    switch (label) {
+      case 'easy':
+        return 'Лёгкая';
+      case 'hard':
+        return 'Высокая';
+      default:
+        return 'Умеренная';
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              decoration: BoxDecoration(
+                color: _chipColor().withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: _chipColor().withValues(alpha: 0.4)),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.bolt, color: _chipColor(), size: 14),
+                  const SizedBox(width: 4),
+                  Text(
+                    'Интенсивность: ${_chipText()}',
+                    style: TextStyle(
+                      fontSize: 13,
+                      height: 18 / 13,
+                      color: _chipColor(),
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        if (reason != null && reason!.isNotEmpty) ...[
+          const SizedBox(height: 4),
+          Text(
+            reason!,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              fontSize: 13,
+              height: 18 / 13,
+              color: Color(0xFF6B7280),
+            ),
+          ),
+        ],
+      ],
     );
   }
 }

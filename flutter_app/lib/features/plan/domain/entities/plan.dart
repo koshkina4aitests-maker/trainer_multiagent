@@ -4,6 +4,8 @@ class PlannedWorkout {
   final DateTime scheduledDate;
   final List<String> exerciseNames;
   final String? recommendationReason;
+  final String? intensityLabel;
+  final String? intensityReasonShort;
   final bool completed;
 
   const PlannedWorkout({
@@ -12,6 +14,8 @@ class PlannedWorkout {
     required this.scheduledDate,
     required this.exerciseNames,
     this.recommendationReason,
+    this.intensityLabel,
+    this.intensityReasonShort,
     this.completed = false,
   });
 
@@ -21,6 +25,8 @@ class PlannedWorkout {
     DateTime? scheduledDate,
     List<String>? exerciseNames,
     String? recommendationReason,
+    String? intensityLabel,
+    String? intensityReasonShort,
     bool? completed,
   }) {
     return PlannedWorkout(
@@ -29,6 +35,8 @@ class PlannedWorkout {
       scheduledDate: scheduledDate ?? this.scheduledDate,
       exerciseNames: exerciseNames ?? this.exerciseNames,
       recommendationReason: recommendationReason ?? this.recommendationReason,
+      intensityLabel: intensityLabel ?? this.intensityLabel,
+      intensityReasonShort: intensityReasonShort ?? this.intensityReasonShort,
       completed: completed ?? this.completed,
     );
   }
@@ -39,6 +47,8 @@ class PlannedWorkout {
         'scheduledDate': scheduledDate.toIso8601String(),
         'exerciseNames': exerciseNames,
         'recommendationReason': recommendationReason,
+        'intensityLabel': intensityLabel,
+        'intensityReasonShort': intensityReasonShort,
         'completed': completed,
       };
 
@@ -48,6 +58,8 @@ class PlannedWorkout {
         scheduledDate: DateTime.parse(j['scheduledDate']),
         exerciseNames: List<String>.from(j['exerciseNames'] ?? []),
         recommendationReason: j['recommendationReason'],
+        intensityLabel: j['intensityLabel'],
+        intensityReasonShort: j['intensityReasonShort'],
         completed: j['completed'] ?? false,
       );
 }

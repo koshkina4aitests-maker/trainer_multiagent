@@ -183,13 +183,18 @@ class _RecommendationCard extends StatelessWidget {
                               .copyWith(color: AppColors.primary)),
                     ),
                     const Spacer(),
-                    TextButton.icon(
-                      onPressed: () => _showReadinessSheet(context),
-                      icon: const Icon(Icons.tune, size: 16),
-                      label: const Text('Обновить'),
-                      style: TextButton.styleFrom(
-                        foregroundColor: AppColors.muted,
-                        textStyle: AppTextStyles.caption,
+                    SizedBox(
+                      height: 44,
+                      child: TextButton.icon(
+                        onPressed: () => _showReadinessSheet(context),
+                        icon: const Icon(Icons.tune, size: 16),
+                        label: const Text('Обновить'),
+                        style: TextButton.styleFrom(
+                          foregroundColor: AppColors.muted,
+                          textStyle: AppTextStyles.caption,
+                          minimumSize: const Size(44, 44),
+                          tapTargetSize: MaterialTapTargetSize.padded,
+                        ),
                       ),
                     ),
                   ],
@@ -214,9 +219,21 @@ class _RecommendationCard extends StatelessWidget {
                             color: AppColors.success, size: 16),
                         const SizedBox(width: 8),
                         Expanded(
-                          child: Text(rec.recommendationReason!,
-                              style: AppTextStyles.caption
-                                  .copyWith(color: AppColors.text)),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(rec.recommendationReason!,
+                                  style: AppTextStyles.caption
+                                      .copyWith(color: AppColors.text)),
+                              if (rec.intensityLabel != null) ...[
+                                const SizedBox(height: 6),
+                                _HomeIntensityChip(
+                                  label: rec.intensityLabel!,
+                                  reason: rec.intensityReasonShort,
+                                ),
+                              ],
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -420,27 +437,42 @@ class _DayRow extends StatelessWidget {
                   )
                 : Column(
                     children: workouts
-                        .map((w) => Container(
-                              margin: const EdgeInsets.only(bottom: 4),
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 12, vertical: 8),
-                              decoration: BoxDecoration(
-                                color:
-                                    w.completed ? AppColors.successLight : AppColors.primaryLight,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    w.completed ? Icons.check_circle : Icons.fitness_center,
-                                    color: w.completed ? AppColors.success : AppColors.primary,
-                                    size: 16,
+                        .map((w) => GestureDetector(
+                              behavior: HitTestBehavior.opaque,
+                              onTap: () => context.push('/plan/workout', extra: w),
+                              child: ConstrainedBox(
+                                constraints: const BoxConstraints(minHeight: 44),
+                                child: Container(
+                                  margin: const EdgeInsets.only(bottom: 4),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12, vertical: 8),
+                                  decoration: BoxDecoration(
+                                    color: w.completed
+                                        ? AppColors.successLight
+                                        : AppColors.primaryLight,
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                  const SizedBox(width: 8),
-                                  Expanded(
-                                    child: Text(w.name, style: AppTextStyles.bodyMedium),
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        w.completed
+                                            ? Icons.check_circle
+                                            : Icons.fitness_center,
+                                        color: w.completed
+                                            ? AppColors.success
+                                            : AppColors.primary,
+                                        size: 16,
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Expanded(
+                                        child: Text(w.name,
+                                            style: AppTextStyles.bodyMedium),
+                                      ),
+                                      const Icon(Icons.chevron_right,
+                                          size: 16, color: AppColors.muted),
+                                    ],
                                   ),
-                                ],
+                                ),
                               ),
                             ))
                         .toList(),
@@ -618,6 +650,64 @@ class _SliderRow extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _HomeIntensityChip extends StatelessWidget {
+  final String label;
+  final String? reason;
+
+  const _HomeIntensityChip({required this.label, this.reason});
+
+  Color _color() {
+    switch (label) {
+      case 'easy': return const Color(0xFF4CAF50);
+      case 'hard': return const Color(0xFFF44336);
+      default: return const Color(0xFFFF9800);
+    }
+  }
+
+  String _text() {
+    switch (label) {
+      case 'easy': return 'Лёгкая';
+      case 'hard': return 'Высокая';
+      default: return 'Умеренная';
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Icon(Icons.bolt, color: _color(), size: 13),
+            const SizedBox(width: 3),
+            Text(
+              'Интенсивность: ${_text()}',
+              style: TextStyle(
+                fontSize: 13,
+                height: 18 / 13,
+                color: _color(),
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
+        ),
+        if (reason != null && reason!.isNotEmpty)
+          Text(
+            reason!,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              fontSize: 13,
+              height: 18 / 13,
+              color: Color(0xFF6B7280),
+            ),
+          ),
+      ],
     );
   }
 }
