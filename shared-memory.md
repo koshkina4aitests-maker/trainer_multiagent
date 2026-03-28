@@ -34,7 +34,17 @@
   - `ready_for_pipeline`: `ok`
 
 ## DevOps secrets policy
-- `ssh_password_requested`: `pending`
+- `ssh_password_requested`: `done`
 - `ssh_password_storage`: `forbidden`
-- `post_use_cleanup`: `required`
+- `post_use_cleanup`: `done`
+
+## DevOps -> UX final regression
+- `input`: `devops-pipeline-iter01.md`
+- `pipeline_status`: `passed`
+- `status`: `done`
+- `notes`: Финальный UX-прогон выполнен, замечания опубликованы.
+
+## Iteration close
+- `final_ux_artifact`: `ux-final-iter01.md`
+- `global_status`: `completed`
 
