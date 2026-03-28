@@ -1,0 +1,19 @@
+{
+  "@@locale": "en",
+  "appTitle": "FitApp",
+  "welcome": "Welcome",
+  "home": "Home",
+  "plan": "Plan",
+  "workouts": "Exercises",
+  "progress": "Progress",
+  "profile": "Profile",
+  "signIn": "Sign In",
+  "signOut": "Sign Out",
+  "save": "Save",
+  "cancel": "Cancel",
+  "retry": "Retry",
+  "loading": "Loading...",
+  "error": "Error",
+  "noConnection": "No internet connection",
+  "disclaimer": "Not a medical consultation"
+}
