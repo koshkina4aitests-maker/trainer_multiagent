@@ -1,4 +1,5 @@
 from datetime import date
+from typing import Literal
 
 from fastapi import HTTPException, status
 from sqlalchemy import select
@@ -11,7 +12,9 @@ class RecommendationService:
     def __init__(self, session: Session) -> None:
         self.session = session
 
-    def generate_for_user(self, user_id: int, current_condition: str) -> Recommendation:
+    def generate_for_user(
+        self, user_id: int, current_condition: str
+    ) -> dict:
         user = self.session.get(User, user_id)
         if user is None:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
@@ -35,7 +38,12 @@ class RecommendationService:
             .limit(1)
         )
 
-        rationale = self._build_rationale(current_condition=current_condition, latest_session=latest_session)
+        rationale = self._build_rationale(
+            current_condition=current_condition, latest_session=latest_session
+        )
+        intensity_label, intensity_reason_short = self._build_intensity(
+            current_condition=current_condition, latest_session=latest_session
+        )
 
         recommendation = Recommendation(
             user_id=user_id,
@@ -46,7 +54,29 @@ class RecommendationService:
         self.session.add(recommendation)
         self.session.commit()
         self.session.refresh(recommendation)
-        return recommendation
+
+        return {
+            "recommendation_id": recommendation.id,
+            "recommended_for": recommendation.recommended_for,
+            "workout_plan_id": recommendation.workout_plan_id,
+            "rationale": recommendation.rationale,
+            "intensity_label": intensity_label,
+            "intensity_reason_short": intensity_reason_short,
+        }
+
+    @staticmethod
+    def _build_intensity(
+        current_condition: str, latest_session: WorkoutSession | None
+    ) -> tuple[Literal["easy", "moderate", "hard"], str]:
+        condition = current_condition.strip().lower()
+        has_pain = any(w in condition for w in ("pain", "боль", "fatigue", "устал", "дискомфорт"))
+        has_completed = latest_session and latest_session.status == WorkoutSessionStatus.COMPLETED
+
+        if has_pain:
+            return "easy", "Снижена из-за признаков усталости или дискомфорта."
+        if has_completed:
+            return "moderate", "Умеренная — предыдущая сессия завершена, тело готово к прогрессии."
+        return "moderate", "Стандартная нагрузка по вашему плану."
 
     @staticmethod
     def _build_rationale(current_condition: str, latest_session: WorkoutSession | None) -> str:

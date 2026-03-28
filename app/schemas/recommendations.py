@@ -1,4 +1,5 @@
 from datetime import date
+from typing import Literal
 
 from pydantic import BaseModel, Field
 
@@ -12,3 +13,5 @@ class RecommendationResponse(BaseModel):
     recommended_for: date
     workout_plan_id: int | None
     rationale: str
+    intensity_label: Literal["easy", "moderate", "hard"] = "moderate"
+    intensity_reason_short: str = Field(default="", max_length=120)

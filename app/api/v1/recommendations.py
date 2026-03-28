@@ -33,10 +33,7 @@ def generate_recommendation(
     if current_user.id != user_id:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
     _guard_idempotency(db, idempotency_key, "generate_recommendation")
-    recommendation = RecommendationService(db).generate_for_user(user_id=user_id, current_condition=payload.current_condition)
-    return RecommendationResponse(
-        recommendation_id=recommendation.id,
-        recommended_for=recommendation.recommended_for,
-        workout_plan_id=recommendation.workout_plan_id,
-        rationale=recommendation.rationale,
+    data = RecommendationService(db).generate_for_user(
+        user_id=user_id, current_condition=payload.current_condition
     )
+    return RecommendationResponse(**data)
