@@ -65,3 +65,45 @@
 - `artifact`: `fitness_app-debug-iter04.apk`
 - `notes`: Debug APK assembled without signing key (`flutter build apk --debug`) in isolated build environment.
 
+---
+
+## Current iteration
+- `iteration_id`: `iter-05`
+- `owner`: `Technical PM`
+- `global_status`: `completed`
+
+## UX Tester -> Business Analyst
+- `input`: `ux-report-iter05.md`
+- `status`: `done`
+- `notes`: Новые требования от заказчика конвертированы в UX-вход по 3 ключевым блокам (Профиль, Рекомендации, План).
+
+## Business Analyst -> Architect
+- `input`: `requirements-iter05.md`
+- `status`: `done`
+- `notes`: Сформированы must/should требования и acceptance criteria для всех новых фич.
+
+## Architect -> Backend/Frontend
+- `input`: `architecture-iter05.md`
+- `status`: `done`
+- `notes`: Уточнены модель данных, API-контракты и сценарии копирования/редактирования рекомендованных тренировок.
+
+## Frontend + Designer
+- `input`: `frontend-design-iter05.md`
+- `status`: `done`
+- `notes`: Подготовлены UX-правила: поля в плане (sets/reps/weight/RIR), умный поиск упражнений и стиль рекомендаций.
+
+## Development readiness
+- backend:
+  - `artifact`: `backend-status-iter05.md`
+  - `ready_for_pipeline`: `ok`
+- frontend:
+  - `artifact`: `frontend-status-iter05.md`
+  - `ready_for_pipeline`: `ok`
+
+## DevOps pipeline + UX closure
+- `pipeline_artifact`: `devops-pipeline-iter05.md`
+- `pipeline_status`: `passed`
+- `ux_final_artifact`: `ux-final-iter05.md`
+- `ux_status`: `done`
+- `notes`: Регрессия по новым требованиям пройдена, блокирующих замечаний нет.
+

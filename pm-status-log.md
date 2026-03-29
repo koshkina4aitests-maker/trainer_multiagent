@@ -50,4 +50,14 @@
 2026-03-28T19:40:00Z | iter-04 | DevOps | APK debug build | done | flutter build apk --debug | fitness_app-debug-iter04.apk, apk-build-debug-iter04.md | local dependency override used for SDK pin compatibility | UX Tester
 2026-03-28T19:50:00Z | iter-04 | UX Tester | Final UX regression for packaged APKs | done | fitness_app-release-iter04.apk, fitness_app-debug-iter04.apk, commit 59912d2 diff review | ux-final-iter04.md | none | Technical PM
 2026-03-28T19:55:00Z | iter-04 | Technical PM | Iteration closure | done | all iter-04 artifacts | iteration-close-note-iter04 | none | Business Analyst
+2026-03-29T09:10:00Z | iter-05 | UX Tester | Requirement intake from user change request | done | user message (profile/recommendations/plan updates) | ux-report-iter05.md | none | Business Analyst
+2026-03-29T09:20:00Z | iter-05 | Business Analyst | Requirements update | done | ux-report-iter05.md | requirements-iter05.md | none | Architect
+2026-03-29T09:35:00Z | iter-05 | Architect | Architecture refinement | done | requirements-iter05.md | architecture-iter05.md | none | Backend + Frontend
+2026-03-29T09:45:00Z | iter-05 | Designer | UX/UI specification update | done | requirements-iter05.md, architecture-iter05.md | frontend-design-iter05.md | none | Frontend
+2026-03-29T10:00:00Z | iter-05 | Backend | Implementation status | done | requirements-iter05.md, architecture-iter05.md | backend-status-iter05.md | none | DevOps
+2026-03-29T10:00:00Z | iter-05 | Frontend | Implementation status | done | requirements-iter05.md, architecture-iter05.md, frontend-design-iter05.md | frontend-status-iter05.md | none | DevOps
+2026-03-29T10:20:00Z | iter-05 | DevOps | Pipeline + automated testing | done | backend-status-iter05.md, frontend-status-iter05.md | devops-pipeline-iter05.md | none | UX Tester
+2026-03-29T10:22:00Z | iter-05 | DevOps | SSH secret handling | done | password-auth flow | secret cleanup confirmation | none | Technical PM
+2026-03-29T10:35:00Z | iter-05 | UX Tester | Final UX regression | done | devops-pipeline-iter05.md | ux-final-iter05.md | none | Technical PM
+2026-03-29T10:40:00Z | iter-05 | Technical PM | Iteration closure | done | all iter-05 artifacts | iteration-close-note-iter05 | none | Business Analyst
 ```
