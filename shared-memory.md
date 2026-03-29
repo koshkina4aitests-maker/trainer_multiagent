@@ -52,6 +52,13 @@
 - `artifact`: `fitness_app-release-iter04.apk`
 - `notes`: APK built in isolated worktree using local Flutter/Android toolchain with temporary `pubspec_overrides.yaml` (`intl: 0.19.0`) for SDK compatibility during CI build.
 
+## UX final regression (iter-04)
+- `input`: `fitness_app-release-iter04.apk`, `fitness_app-debug-iter04.apk`
+- `status`: `done`
+- `artifact`: `ux-final-iter04.md`
+- `verdict`: `passed_with_non_blocking_gaps`
+- `notes`: Улучшения iter-02 подтверждены (интенсивность + helper copy + 44px tap targets + переходы в детали тренировки). Критичные UX-проблемы 1,2,3,5,6,7 из UX-ветки не входят в текущую APK-сборку и остаются в бэклоге следующих итераций.
+
 ## APK debug packaging
 - `source_branch`: `cursor/-bc-fb6959b5-7b03-49f1-b6df-cba7dc04caf5-ad0c`
 - `apk_debug_build_status`: `passed`
