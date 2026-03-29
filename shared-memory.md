@@ -172,6 +172,13 @@
 - `verdict`: `passed_with_non_blocking_notes`
 - `notes`: Функциональные требования iter-06 закрыты, замечания носят polish-характер.
 
+## UX strict audit (iter-06, max strict)
+- `input`: `fitness_app-release-iter06.apk`, source review for UX-critical paths
+- `status`: `done`
+- `artifact`: `ux-strict-iter06.md`
+- `verdict`: `failed_with_blockers`
+- `notes`: Выявлены критичные UX-риски в core-flow рекомендаций/плана (несоответствие запуска рекомендованной тренировки фактическому составу упражнений, silent failure и навигационные сбои). Требуется corrective iteration.
+
 ---
 
 ## Current iteration
