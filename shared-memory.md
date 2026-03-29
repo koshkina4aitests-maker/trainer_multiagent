@@ -40,7 +40,7 @@
 
 ## DevOps deployment stage
 - `preflight_status`: `done`
-- `status`: `blocked`
-- `notes`: SSH/password authentication succeeded and host preflight passed, but deploy was blocked by branch mismatch: deployment branch (`cursor/-bc-...`) does not contain runtime backend stack files (`docker-compose.yml`), while server runtime uses `cursor/backend-548e`.
-- `next_action`: Get explicit deployment target branch/tag for backend (or merge runtime changes into deploy branch), then re-run `docker compose up -d --build` on the correct branch.
+- `status`: `partial_done`
+- `notes`: Deployment executed on runtime branch `cursor/backend-548e`; `docker compose up -d --build` completed and API health endpoint returned `ok`. Worker container remains `unhealthy` because its healthcheck targets `localhost:8000` (API port), which is not served by the worker process.
+- `next_action`: Update worker healthcheck to a Celery-appropriate probe (or disable container healthcheck for worker), then re-deploy to reach fully green service status.
 
