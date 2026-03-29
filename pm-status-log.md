@@ -40,4 +40,7 @@
 2026-03-28T17:50:00Z | iter-04 | Frontend | Implementation status | done | requirements-iter04.md, architecture-iter04.md, frontend-design-iter04.md | frontend-status-iter04.md | none | DevOps
 2026-03-28T18:05:00Z | iter-04 | DevOps | Deployment preflight (SSH connectivity) | blocked | server credentials from user | preflight-attempt-log | invalid/private-key format or auth failure | Technical PM
 2026-03-28T18:06:00Z | iter-04 | DevOps | SSH secret handling | done | ephemeral env vars + temp key file | secret cleanup confirmation | none | Technical PM
+2026-03-28T18:20:00Z | iter-04 | DevOps | Deployment preflight (SSH password auth) | done | SERVER_HOST, SERVER_USER, SERVER_PASSWORD | server-preflight-ok | none | DevOps
+2026-03-28T18:25:00Z | iter-04 | DevOps | Deployment execution | blocked | /opt/fitness-app (target server) | deploy-attempt-log | selected branch lacks deploy config (docker-compose.yml absent on branch cursor/-bc-831ea3ed-7836-4c29-9827-ecb063ed9331-6179) | Technical PM
+2026-03-28T18:27:00Z | iter-04 | DevOps | Server state rollback safety check | done | remote git + docker compose status | rollback-confirmation-log | none | Technical PM
 ```

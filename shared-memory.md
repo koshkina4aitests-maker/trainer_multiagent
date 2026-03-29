@@ -39,8 +39,8 @@
 - `post_use_cleanup`: `done`
 
 ## DevOps deployment stage
-- `preflight_status`: `blocked`
+- `preflight_status`: `done`
 - `status`: `blocked`
-- `notes`: SSH deployment blocked: provided `SERVER_KEY` is not a valid/deployable private key for SSH auth; server returned `Permission denied (publickey,password)`.
-- `next_action`: Request corrected credentials from authorized owner (`SERVER_KEY` in valid PEM/OpenSSH format and/or password policy confirmation).
+- `notes`: SSH/password authentication succeeded and host preflight passed, but deploy was blocked by branch mismatch: deployment branch (`cursor/-bc-...`) does not contain runtime backend stack files (`docker-compose.yml`), while server runtime uses `cursor/backend-548e`.
+- `next_action`: Get explicit deployment target branch/tag for backend (or merge runtime changes into deploy branch), then re-run `docker compose up -d --build` on the correct branch.
 
