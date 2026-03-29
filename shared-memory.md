@@ -52,3 +52,9 @@
 - `artifact`: `fitness_app-release-iter04.apk`
 - `notes`: APK built in isolated worktree using local Flutter/Android toolchain with temporary `pubspec_overrides.yaml` (`intl: 0.19.0`) for SDK compatibility during CI build.
 
+## APK debug packaging
+- `source_branch`: `cursor/-bc-fb6959b5-7b03-49f1-b6df-cba7dc04caf5-ad0c`
+- `apk_debug_build_status`: `passed`
+- `artifact`: `fitness_app-debug-iter04.apk`
+- `notes`: Debug APK assembled without signing key (`flutter build apk --debug`) in isolated build environment.
+
