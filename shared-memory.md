@@ -1,50 +1,40 @@
 # Shared Memory
 
 ## Current iteration
-- `iteration_id`: `iter-03`
+- `iteration_id`: `iter-04`
 - `owner`: `Technical PM`
-- `global_status`: `completed`
+- `global_status`: `in_progress`
 
 ## UX Tester -> Business Analyst
-- `input`: `ux-report-iter03.md`
+- `input`: `ux-report-iter04.md`
 - `status`: `done`
-- `notes`: Использован подробный пользовательский фидбек из ветки UX-тестера `cursor/fitness-app-user-feedback-640c`.
+- `notes`: Вход собран из non-blocking замечаний финального UX прогона iter-03.
 
 ## Business Analyst -> Architect
-- `input`: `requirements-iter03.md`
+- `input`: `requirements-iter04.md`
 - `status`: `done`
-- `notes`: 7 UX-замечаний преобразованы в формальные требования с приоритетами (P3/P2/P1) и acceptance criteria.
+- `notes`: Сформированы требования по coach hints при промахе целей и по weekly annotation sleep-vs-performance.
 
 ## Architect -> Backend/Frontend
-- `input`: `architecture-iter03.md`
+- `input`: `architecture-iter04.md`
 - `status`: `done`
-- `notes`: Обновлены доменная модель, API-контракты, BLoC-события и NFR под функциональность iter-03.
+- `notes`: Уточнены API/данные и UI-контракты для coach hints и тренд-аннотаций.
 
 ## Frontend + Designer
-- `input`: `frontend-design-iter03.md`
+- `input`: `frontend-design-iter04.md`
 - `status`: `done`
-- `notes`: Подготовлены UX-спеки экранов Active Workout, Summary, Plan Details, Profile и Progress.
+- `notes`: Подготовлены UX-правила для hint badges и weekly trend annotation.
 
 ## Development readiness
 - backend:
-  - `artifact`: `backend-status-iter03.md`
+  - `artifact`: `backend-status-iter04.md`
   - `ready_for_pipeline`: `ok`
 - frontend:
-  - `artifact`: `frontend-status-iter03.md`
+  - `artifact`: `frontend-status-iter04.md`
   - `ready_for_pipeline`: `ok`
 
 ## DevOps secrets policy
-- `ssh_password_requested`: `done`
+- `ssh_password_requested`: `pending`
 - `ssh_password_storage`: `forbidden`
-- `post_use_cleanup`: `done`
-
-## DevOps -> UX final regression
-- `input`: `devops-pipeline-iter03.md`
-- `pipeline_status`: `passed`
-- `status`: `done`
-- `notes`: Финальный UX-прогон выполнен, блокирующие замечания закрыты.
-
-## Iteration close
-- `final_ux_artifact`: `ux-final-iter03.md`
-- `global_status`: `completed`
+- `post_use_cleanup`: `required`
 

@@ -32,4 +32,10 @@
 2026-03-28T16:12:00Z | iter-03 | DevOps | SSH secret handling | done | authorized-owner channel | secret cleanup confirmation | none | Technical PM
 2026-03-28T16:25:00Z | iter-03 | UX Tester | Final UX regression | done | devops-pipeline-iter03.md | ux-final-iter03.md | non-blocking polish items remain | Technical PM
 2026-03-28T16:30:00Z | iter-03 | Technical PM | Iteration closure | done | all iter-03 artifacts | iteration-close-note-iter03 | none | Business Analyst
+2026-03-28T17:00:00Z | iter-04 | UX Tester | Backlog promotion from iter-03 final UX | done | ux-final-iter03.md | ux-report-iter04.md | none | Business Analyst
+2026-03-28T17:10:00Z | iter-04 | Business Analyst | Requirements update | done | ux-report-iter04.md | requirements-iter04.md | none | Architect
+2026-03-28T17:25:00Z | iter-04 | Architect | Architecture refinement | done | requirements-iter04.md | architecture-iter04.md | none | Backend + Frontend
+2026-03-28T17:35:00Z | iter-04 | Designer | UI update guidance | done | requirements-iter04.md, architecture-iter04.md | frontend-design-iter04.md | none | Frontend
+2026-03-28T17:50:00Z | iter-04 | Backend | Implementation status | done | requirements-iter04.md, architecture-iter04.md | backend-status-iter04.md | none | DevOps
+2026-03-28T17:50:00Z | iter-04 | Frontend | Implementation status | done | requirements-iter04.md, architecture-iter04.md, frontend-design-iter04.md | frontend-status-iter04.md | none | DevOps
 ```
