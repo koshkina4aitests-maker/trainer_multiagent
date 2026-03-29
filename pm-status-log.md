@@ -38,4 +38,6 @@
 2026-03-28T17:35:00Z | iter-04 | Designer | UI update guidance | done | requirements-iter04.md, architecture-iter04.md | frontend-design-iter04.md | none | Frontend
 2026-03-28T17:50:00Z | iter-04 | Backend | Implementation status | done | requirements-iter04.md, architecture-iter04.md | backend-status-iter04.md | none | DevOps
 2026-03-28T17:50:00Z | iter-04 | Frontend | Implementation status | done | requirements-iter04.md, architecture-iter04.md, frontend-design-iter04.md | frontend-status-iter04.md | none | DevOps
+2026-03-28T18:05:00Z | iter-04 | DevOps | Deployment preflight (SSH connectivity) | blocked | server credentials from user | preflight-attempt-log | invalid/private-key format or auth failure | Technical PM
+2026-03-28T18:06:00Z | iter-04 | DevOps | SSH secret handling | done | ephemeral env vars + temp key file | secret cleanup confirmation | none | Technical PM
 ```

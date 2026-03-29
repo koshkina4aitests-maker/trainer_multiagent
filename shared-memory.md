@@ -34,7 +34,13 @@
   - `ready_for_pipeline`: `ok`
 
 ## DevOps secrets policy
-- `ssh_password_requested`: `pending`
+- `ssh_password_requested`: `done`
 - `ssh_password_storage`: `forbidden`
-- `post_use_cleanup`: `required`
+- `post_use_cleanup`: `done`
+
+## DevOps deployment stage
+- `preflight_status`: `blocked`
+- `status`: `blocked`
+- `notes`: SSH deployment blocked: provided `SERVER_KEY` is not a valid/deployable private key for SSH auth; server returned `Permission denied (publickey,password)`.
+- `next_action`: Request corrected credentials from authorized owner (`SERVER_KEY` in valid PEM/OpenSSH format and/or password policy confirmation).
 
