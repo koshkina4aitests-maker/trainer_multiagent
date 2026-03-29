@@ -60,4 +60,6 @@
 2026-03-29T10:22:00Z | iter-05 | DevOps | SSH secret handling | done | password-auth flow | secret cleanup confirmation | none | Technical PM
 2026-03-29T10:35:00Z | iter-05 | UX Tester | Final UX regression | done | devops-pipeline-iter05.md | ux-final-iter05.md | none | Technical PM
 2026-03-29T10:40:00Z | iter-05 | Technical PM | Iteration closure | done | all iter-05 artifacts | iteration-close-note-iter05 | none | Business Analyst
+2026-03-29T13:40:00Z | iter-05 | DevOps | APK release build refresh | done | origin/cursor/-bc-fb6959b5-7b03-49f1-b6df-cba7dc04caf5-ad0c/flutter_app | fitness_app-release-iter05.apk | local dependency override used for SDK pin compatibility | DevOps
+2026-03-29T13:50:00Z | iter-05 | DevOps | Backend deployment execution | done | /opt/fitness-app@cursor/backend-548e, SERVER_HOST/SERVER_USER/SERVER_PASSWORD | devops-deploy-iter05.md | none | UX Tester
 ```

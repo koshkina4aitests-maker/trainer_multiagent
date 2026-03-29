@@ -72,6 +72,59 @@
 - `owner`: `Technical PM`
 - `global_status`: `completed`
 
+## Requirements intake
+- `input`: user-provided requirements (profile + recommendations + plan upgrades)
+- `status`: `done`
+- `notes`: Новые требования формализованы и проведены через полный цикл.
+
+## Business Analyst -> Architect
+- `input`: `requirements-iter05.md`
+- `status`: `done`
+- `notes`: Требования по профилю, рекомендациям и плану детализированы с acceptance criteria.
+
+## Architect -> Backend/Frontend
+- `input`: `architecture-iter05.md`
+- `status`: `done`
+- `notes`: Обновлены API-контракты, data model и UI/flow constraints.
+
+## Frontend + Designer
+- `input`: `frontend-design-iter05.md`
+- `status`: `done`
+- `notes`: Подготовлены UX-спеки и интерактивные flow-обновления.
+
+## Development readiness
+- backend:
+  - `artifact`: `backend-status-iter05.md`
+  - `ready_for_pipeline`: `ok`
+- frontend:
+  - `artifact`: `frontend-status-iter05.md`
+  - `ready_for_pipeline`: `ok`
+
+## DevOps pipeline and deployment
+- `pipeline_artifact`: `devops-pipeline-iter05.md`
+- `deploy_artifact`: `devops-deploy-iter05.md`
+- `pipeline_status`: `passed`
+- `deploy_status`: `done`
+- `notes`: SSH/password preflight passed; server deployment executed on `/opt/fitness-app` (`cursor/backend-548e`), `docker compose up -d --build` completed, services healthy, `/health` returned `ok`.
+
+## APK build
+- `artifact`: `fitness_app-release-iter05.apk`
+- `apk_build_status`: `passed`
+- `notes`: Release APK assembled from source branch `cursor/-bc-fb6959b5-7b03-49f1-b6df-cba7dc04caf5-ad0c`.
+
+## UX final regression
+- `artifact`: `ux-final-iter05.md`
+- `status`: `done`
+- `verdict`: `passed_with_non_blocking_issues`
+- `notes`: Основные требования покрыты; замечания перенесены в backlog.
+
+---
+
+## Current iteration
+- `iteration_id`: `iter-05`
+- `owner`: `Technical PM`
+- `global_status`: `completed`
+
 ## UX Tester -> Business Analyst
 - `input`: `ux-report-iter05.md`
 - `status`: `done`
