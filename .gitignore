@@ -5,3 +5,5 @@ __pycache__/
 .coverage
 fitness.db
 *.sqlite3
+flutter-sdk/
+android-sdk/

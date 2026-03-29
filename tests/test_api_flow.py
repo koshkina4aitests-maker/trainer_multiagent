@@ -1,15 +1,22 @@
 def test_core_mvp_flow() -> None:
+    from uuid import uuid4
+
     from fastapi.testclient import TestClient
 
     from app.main import app
+
+    suffix = uuid4().hex[:8]
+    email = f"user-{suffix}@example.com"
+    google_sub = f"google-sub-{suffix}"
+    exercise_name = f"Barbell Bench Press {suffix}"
 
     with TestClient(app) as client:
         auth_resp = client.post(
             "/v1/auth/google",
             json={
-                "email": "user@example.com",
+                "email": email,
                 "full_name": "Test User",
-                "google_sub": "google-sub-123",
+                "google_sub": google_sub,
             },
         )
         assert auth_resp.status_code == 200
@@ -41,7 +48,7 @@ def test_core_mvp_flow() -> None:
         exercise_resp = client.post(
             "/v1/exercises",
             json={
-                "name": "Barbell Bench Press",
+                "name": exercise_name,
                 "muscle_group": "chest",
                 "contraindications": "shoulder pain",
             },
@@ -61,7 +68,7 @@ def test_core_mvp_flow() -> None:
                 "items": [
                     {
                         "exercise_id": exercise_id,
-                        "exercise_name": "Barbell Bench Press",
+                        "exercise_name": exercise_name,
                         "sets": 3,
                         "reps": 8,
                         "weight_kg": 60,

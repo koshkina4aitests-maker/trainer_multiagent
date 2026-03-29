@@ -121,6 +121,60 @@
 ---
 
 ## Current iteration
+- `iteration_id`: `iter-06`
+- `owner`: `Technical PM`
+- `global_status`: `completed`
+
+## UX Tester -> Business Analyst
+- `input`: `ux-report-iter05.md` + user confirmation to execute full cycle
+- `status`: `done`
+- `notes`: Подтвержден запуск полного цикла с реализацией profile/recommendation/plan обновлений.
+
+## Business Analyst -> Architect
+- `input`: `requirements-iter05.md`
+- `status`: `done`
+- `notes`: Требования зафиксированы и доведены до имплементации и валидации.
+
+## Architect -> Backend/Frontend
+- `input`: `architecture-iter05.md`
+- `status`: `done`
+- `notes`: Контракты синхронизированы между backend и Flutter.
+
+## Development readiness
+- backend:
+  - `artifact`: `backend-status-iter05.md`
+  - `ready_for_pipeline`: `ok`
+- frontend:
+  - `artifact`: `frontend-status-iter05.md`
+  - `ready_for_pipeline`: `ok`
+
+## DevOps pipeline and verification
+- `pipeline_status`: `passed`
+- `backend_tests`: `passed` (`python3 -m pytest -q`)
+- `flutter_analyze`: `passed`
+- `flutter_tests`: `passed`
+- `apk_build_status`: `passed`
+- `apk_artifact`: `fitness_app-release-iter06.apk`
+- `apk_report`: `apk-build-iter06.md`
+
+## DevOps deployment stage
+- `ssh_password_requested`: `done`
+- `ssh_password_storage`: `forbidden`
+- `post_use_cleanup`: `done`
+- `status`: `done`
+- `artifact`: `devops-deploy-iter06.md`
+- `notes`: Backend deployed on `/opt/fitness-app` with source branch `cursor/-bc-831ea3ed-7836-4c29-9827-ecb063ed9331-6179`; API health `ok`, worker restored to `healthy` via runtime compose override on server.
+
+## UX final regression (iter-06)
+- `input`: `fitness_app-release-iter06.apk`, deployment/runtime verification
+- `status`: `done`
+- `artifact`: `ux-final-iter06.md`
+- `verdict`: `passed_with_non_blocking_notes`
+- `notes`: Функциональные требования iter-06 закрыты, замечания носят polish-характер.
+
+---
+
+## Current iteration
 - `iteration_id`: `iter-05`
 - `owner`: `Technical PM`
 - `global_status`: `completed`

@@ -494,7 +494,7 @@ class _PlanItemEditor extends StatelessWidget {
               final names = options.map((e) => e.name).toList();
               final value = names.contains(item.exerciseName) ? item.exerciseName : null;
               return DropdownButtonFormField<String>(
-                value: value,
+                initialValue: value,
                 items: names
                     .map((n) => DropdownMenuItem<String>(value: n, child: Text(n)))
                     .toList(),
