@@ -45,4 +45,6 @@
 2026-03-28T18:32:00Z | iter-04 | DevOps | SSH secret handling | done | ephemeral password env var | secret cleanup confirmation | none | Technical PM
 2026-03-28T18:45:00Z | iter-04 | DevOps | Worker healthcheck remediation | done | /opt/fitness-app/docker-compose.yml | worker-healthcheck-fix-log | none | DevOps
 2026-03-28T18:47:00Z | iter-04 | DevOps | Post-fix stack validation | done | docker compose ps, api /health | full-stack-healthy-log | none | UX Tester
+2026-03-28T19:10:00Z | iter-04 | DevOps | Flutter QA pipeline (analyze + tests) | done | origin/cursor/-bc-fb6959b5-7b03-49f1-b6df-cba7dc04caf5-ad0c/flutter_app | flutter-analyze-test-log | none | Release
+2026-03-28T19:25:00Z | iter-04 | DevOps | APK release build | done | flutter build apk --release | fitness_app-release-iter04.apk, apk-build-iter04.md | local dependency override used for SDK pin compatibility | UX Tester
 ```

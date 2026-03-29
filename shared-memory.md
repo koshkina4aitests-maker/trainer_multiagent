@@ -44,3 +44,11 @@
 - `notes`: Deployment executed on runtime branch `cursor/backend-548e`; worker healthcheck fixed to Celery-native probe (`celery inspect ping -d celery@$$HOSTNAME`). Full stack now healthy (`api`, `redis`, `worker`) and API health endpoint returns `ok`.
 - `next_action`: Proceed to UX final regression for iter-04 release candidate.
 
+## APK build and release packaging
+- `source_branch`: `cursor/-bc-fb6959b5-7b03-49f1-b6df-cba7dc04caf5-ad0c`
+- `analyze_status`: `passed`
+- `test_status`: `passed`
+- `apk_build_status`: `passed`
+- `artifact`: `fitness_app-release-iter04.apk`
+- `notes`: APK built in isolated worktree using local Flutter/Android toolchain with temporary `pubspec_overrides.yaml` (`intl: 0.19.0`) for SDK compatibility during CI build.
+
