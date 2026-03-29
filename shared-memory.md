@@ -40,7 +40,7 @@
 
 ## DevOps deployment stage
 - `preflight_status`: `done`
-- `status`: `partial_done`
-- `notes`: Deployment executed on runtime branch `cursor/backend-548e`; `docker compose up -d --build` completed and API health endpoint returned `ok`. Worker container remains `unhealthy` because its healthcheck targets `localhost:8000` (API port), which is not served by the worker process.
-- `next_action`: Update worker healthcheck to a Celery-appropriate probe (or disable container healthcheck for worker), then re-deploy to reach fully green service status.
+- `status`: `done`
+- `notes`: Deployment executed on runtime branch `cursor/backend-548e`; worker healthcheck fixed to Celery-native probe (`celery inspect ping -d celery@$$HOSTNAME`). Full stack now healthy (`api`, `redis`, `worker`) and API health endpoint returns `ok`.
+- `next_action`: Proceed to UX final regression for iter-04 release candidate.
 
