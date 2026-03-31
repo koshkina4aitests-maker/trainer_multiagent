@@ -206,6 +206,23 @@
   - `python3 -m pytest -q`: passed
 - `notes`: Реализован web-friendly layout без изменения бизнес-правил мобильного UX.
 
+## Final release cycle (iter-06c)
+- `status`: `done`
+- `artifacts`:
+  - `apk-build-iter06c.md`
+  - `web-build-iter06c.md`
+  - `devops-deploy-iter06c.md`
+  - `ux-final-iter06c.md`
+- `mobile_release_apk`: `fitness_app-release-iter06c.apk`
+- `web_release_bundle`: `fitness_app-web-iter06c.tar.gz` (deployed to `/opt/fitness-app/web_build`)
+- `deployment`:
+  - backend branch deployed: `cursor/-bc-831ea3ed-7836-4c29-9827-ecb063ed9331-6179`
+  - API health: `ok`
+  - worker health: `healthy`
+- `final_signoff`:
+  - mobile+web release candidate accepted for current scope
+  - no blocking issues in final technical UX sign-off
+
 ---
 
 ## Current iteration
