@@ -33,6 +33,7 @@ class _PlanPageState extends State<PlanPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isWide = MediaQuery.of(context).size.width >= 1024;
     return Scaffold(
       backgroundColor: AppColors.bg,
       appBar: AppBar(
@@ -58,20 +59,25 @@ class _PlanPageState extends State<PlanPage> {
             },
           ),
           Expanded(
-            child: BlocBuilder<PlanBloc, PlanState>(
-              builder: (context, state) {
-                if (state is PlanLoading) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                if (state is PlanLoaded) {
-                  return _buildWeekView(context, state);
-                }
-                return const EmptyStateWidget(
-                  icon: Icons.calendar_today,
-                  title: 'Нет тренировок',
-                  subtitle: 'Добавьте первую тренировку в план',
-                );
-              },
+            child: Center(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(maxWidth: isWide ? 980 : double.infinity),
+                child: BlocBuilder<PlanBloc, PlanState>(
+                  builder: (context, state) {
+                    if (state is PlanLoading) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    if (state is PlanLoaded) {
+                      return _buildWeekView(context, state);
+                    }
+                    return const EmptyStateWidget(
+                      icon: Icons.calendar_today,
+                      title: 'Нет тренировок',
+                      subtitle: 'Добавьте первую тренировку в план',
+                    );
+                  },
+                ),
+              ),
             ),
           ),
         ],

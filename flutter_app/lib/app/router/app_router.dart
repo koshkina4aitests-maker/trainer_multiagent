@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../theme/app_colors.dart';
 import '../../core/di/service_locator.dart';
 import '../../core/storage/local_storage.dart';
 import '../../features/auth/presentation/bloc/auth_bloc.dart';
@@ -178,19 +179,66 @@ class _AppShell extends StatelessWidget {
     final location = state.matchedLocation;
     final idx = _tabIndex(location);
 
+    void onDestination(int i) {
+      switch (i) {
+        case 0: context.go('/home');
+        case 1: context.go('/home/plan');
+        case 2: context.go('/home/workouts');
+        case 3: context.go('/home/progress');
+        case 4: context.go('/home/profile');
+      }
+    }
+
+    final isWide = MediaQuery.of(context).size.width >= 1024;
+    if (isWide) {
+      return Scaffold(
+        body: Row(
+          children: [
+            NavigationRail(
+              selectedIndex: idx,
+              onDestinationSelected: onDestination,
+              labelType: NavigationRailLabelType.all,
+              backgroundColor: AppColors.white,
+              destinations: const [
+                NavigationRailDestination(
+                  icon: Icon(Icons.home_outlined),
+                  selectedIcon: Icon(Icons.home),
+                  label: Text('Главная'),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.calendar_today_outlined),
+                  selectedIcon: Icon(Icons.calendar_today),
+                  label: Text('План'),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.fitness_center_outlined),
+                  selectedIcon: Icon(Icons.fitness_center),
+                  label: Text('Упражнения'),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.bar_chart_outlined),
+                  selectedIcon: Icon(Icons.bar_chart),
+                  label: Text('Прогресс'),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.person_outline),
+                  selectedIcon: Icon(Icons.person),
+                  label: Text('Профиль'),
+                ),
+              ],
+            ),
+            const VerticalDivider(width: 1),
+            Expanded(child: child),
+          ],
+        ),
+      );
+    }
+
     return Scaffold(
       body: child,
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: idx,
-        onTap: (i) {
-          switch (i) {
-            case 0: context.go('/home');
-            case 1: context.go('/home/plan');
-            case 2: context.go('/home/workouts');
-            case 3: context.go('/home/progress');
-            case 4: context.go('/home/profile');
-          }
-        },
+        onTap: onDestination,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home_outlined), activeIcon: Icon(Icons.home), label: 'Главная'),
           BottomNavigationBarItem(icon: Icon(Icons.calendar_today_outlined), activeIcon: Icon(Icons.calendar_today), label: 'План'),

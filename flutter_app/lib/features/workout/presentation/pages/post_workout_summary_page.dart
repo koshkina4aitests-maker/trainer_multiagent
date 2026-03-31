@@ -30,33 +30,38 @@ class PostWorkoutSummaryPage extends StatelessWidget {
             title: const Text('Тренировка завершена!'),
             automaticallyImplyLeading: false,
           ),
-          body: SingleChildScrollView(
-            padding: const EdgeInsets.all(AppSpacing.lg),
-            child: Column(
-              children: [
-                const SizedBox(height: 8),
-                _CelebrationBanner(),
-                const SizedBox(height: 24),
-                _StatCards(session: state.session),
-                const SizedBox(height: 24),
-                Text('Упражнения', style: AppTextStyles.h3),
-                const SizedBox(height: 12),
-                ...session.exercises
-                    .where((e) => e.sets.isNotEmpty)
-                    .map((e) => _ExerciseSummaryCard(log: e)),
-                const SizedBox(height: 32),
-                AppButton(
-                  label: 'На главную',
-                  onPressed: () => context.go('/home'),
+          body: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 980),
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(AppSpacing.lg),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 8),
+                    _CelebrationBanner(),
+                    const SizedBox(height: 24),
+                    _StatCards(session: state.session),
+                    const SizedBox(height: 24),
+                    Text('Упражнения', style: AppTextStyles.h3),
+                    const SizedBox(height: 12),
+                    ...session.exercises
+                        .where((e) => e.sets.isNotEmpty)
+                        .map((e) => _ExerciseSummaryCard(log: e)),
+                    const SizedBox(height: 32),
+                    AppButton(
+                      label: 'На главную',
+                      onPressed: () => context.go('/home'),
+                    ),
+                    const SizedBox(height: 12),
+                    AppButton(
+                      label: 'Посмотреть прогресс',
+                      style: AppButtonStyle.secondary,
+                      onPressed: () => context.go('/home/progress'),
+                    ),
+                    const SizedBox(height: 32),
+                  ],
                 ),
-                const SizedBox(height: 12),
-                AppButton(
-                  label: 'Посмотреть прогресс',
-                  style: AppButtonStyle.secondary,
-                  onPressed: () => context.go('/home/progress'),
-                ),
-                const SizedBox(height: 32),
-              ],
+              ),
             ),
           ),
         );

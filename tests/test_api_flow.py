@@ -10,6 +10,8 @@ def test_core_mvp_flow() -> None:
     google_sub = f"google-sub-{suffix}"
     exercise_name = f"Barbell Bench Press {suffix}"
 
+    idempotency_prefix = f"idem-{suffix}"
+
     with TestClient(app) as client:
         auth_resp = client.post(
             "/v1/auth/google",
@@ -82,7 +84,10 @@ def test_core_mvp_flow() -> None:
 
         session_resp = client.post(
             "/v1/workouts/sessions",
-            headers={"Idempotency-Key": "session-start-1", "X-User-Id": str(user_id)},
+            headers={
+                "Idempotency-Key": f"{idempotency_prefix}-session-start-1",
+                "X-User-Id": str(user_id),
+            },
             json={
                 "user_id": user_id,
                 "plan_id": plan_id,
@@ -94,7 +99,10 @@ def test_core_mvp_flow() -> None:
 
         session_duplicate_resp = client.post(
             "/v1/workouts/sessions",
-            headers={"Idempotency-Key": "session-start-1", "X-User-Id": str(user_id)},
+            headers={
+                "Idempotency-Key": f"{idempotency_prefix}-session-start-1",
+                "X-User-Id": str(user_id),
+            },
             json={
                 "user_id": user_id,
                 "plan_id": plan_id,
@@ -118,14 +126,20 @@ def test_core_mvp_flow() -> None:
 
         complete_resp = client.post(
             f"/v1/workouts/sessions/{session_id}/complete",
-            headers={"Idempotency-Key": "complete-session-1", "X-User-Id": str(user_id)},
+            headers={
+                "Idempotency-Key": f"{idempotency_prefix}-complete-session-1",
+                "X-User-Id": str(user_id),
+            },
         )
         assert complete_resp.status_code == 200
         assert complete_resp.json()["status"] == "completed"
 
         recommendation_resp = client.post(
             f"/v1/users/{user_id}/recommendations",
-            headers={"Idempotency-Key": "recommendation-1", "X-User-Id": str(user_id)},
+            headers={
+                "Idempotency-Key": f"{idempotency_prefix}-recommendation-1",
+                "X-User-Id": str(user_id),
+            },
             json={"current_condition": "fatigue and minor pain", "style": "split_upper"},
         )
         assert recommendation_resp.status_code == 200

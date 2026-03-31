@@ -38,56 +38,81 @@ class _HomePageState extends State<HomePage> {
         ? 'Спортсмен'
         : storage.userName!;
     final goal = storage.userGoal ?? 'Здоровье';
+    final isWide = MediaQuery.of(context).size.width >= 1024;
 
     return Scaffold(
       backgroundColor: AppColors.bg,
       body: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              pinned: true,
-              backgroundColor: AppColors.white,
-              title: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Привет, ${name.split(' ').first}!',
-                      style: AppTextStyles.h3),
-                  Text('Цель: $goal',
-                      style: AppTextStyles.caption.copyWith(color: AppColors.muted)),
-                ],
+        child: Row(
+          children: [
+            if (isWide)
+              const Expanded(
+                flex: 1,
+                child: SizedBox.shrink(),
               ),
-              actions: [
-                IconButton(
-                  icon: const Icon(Icons.notifications_outlined),
-                  onPressed: () {},
-                ),
-                IconButton(
-                  icon: const CircleAvatar(
-                    radius: 16,
-                    backgroundColor: AppColors.primaryLight,
-                    child: Icon(Icons.person, size: 18, color: AppColors.primary),
+            Expanded(
+              flex: 6,
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 1100),
+                  child: CustomScrollView(
+                    slivers: [
+                      SliverAppBar(
+                        pinned: true,
+                        backgroundColor: AppColors.white,
+                        title: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Привет, ${name.split(' ').first}!',
+                                style: AppTextStyles.h3),
+                            Text('Цель: $goal',
+                                style: AppTextStyles.caption.copyWith(color: AppColors.muted)),
+                          ],
+                        ),
+                        actions: [
+                          IconButton(
+                            icon: const Icon(Icons.notifications_outlined),
+                            onPressed: () {},
+                            tooltip: 'Уведомления',
+                          ),
+                          IconButton(
+                            icon: const CircleAvatar(
+                              radius: 16,
+                              backgroundColor: AppColors.primaryLight,
+                              child: Icon(Icons.person, size: 18, color: AppColors.primary),
+                            ),
+                            onPressed: () => context.go('/home/profile'),
+                            tooltip: 'Профиль',
+                          ),
+                        ],
+                      ),
+                      SliverPadding(
+                        padding: const EdgeInsets.all(AppSpacing.lg),
+                        sliver: SliverList(
+                          delegate: SliverChildListDelegate([
+                            _DraftSessionBanner(),
+                            const SizedBox(height: 16),
+                            _RecommendationCard(),
+                            const SizedBox(height: 24),
+                            _QuickStatsRow(),
+                            const SizedBox(height: 24),
+                            Text('Тренировки на этой неделе', style: AppTextStyles.h3),
+                            const SizedBox(height: 12),
+                            _WeekWorkoutsSection(),
+                            const SizedBox(height: 80),
+                          ]),
+                        ),
+                      ),
+                    ],
                   ),
-                  onPressed: () => context.go('/home/profile'),
                 ),
-              ],
-            ),
-            SliverPadding(
-              padding: const EdgeInsets.all(AppSpacing.lg),
-              sliver: SliverList(
-                delegate: SliverChildListDelegate([
-                  _DraftSessionBanner(),
-                  const SizedBox(height: 16),
-                  _RecommendationCard(),
-                  const SizedBox(height: 24),
-                  _QuickStatsRow(),
-                  const SizedBox(height: 24),
-                  Text('Тренировки на этой неделе', style: AppTextStyles.h3),
-                  const SizedBox(height: 12),
-                  _WeekWorkoutsSection(),
-                  const SizedBox(height: 80),
-                ]),
               ),
             ),
+            if (isWide)
+              const Expanded(
+                flex: 1,
+                child: SizedBox.shrink(),
+              ),
           ],
         ),
       ),

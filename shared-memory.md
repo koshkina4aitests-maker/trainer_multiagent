@@ -192,6 +192,20 @@
 - `verdict`: `blockers_closed_code_review`
 - `notes`: Блокеры из strict UX-аудита закрыты на уровне реализованных code-path. Требуется следующий device-level regression pass для финального release sign-off.
 
+## Web parity implementation (iter-06b)
+- `status`: `done`
+- `scope`: frontend web behavior parity for mobile core flows
+- `artifact`: `frontend-web-parity-iter06b.md`
+- `changes`:
+  - adaptive app shell with `NavigationRail` on wide layouts and mobile bottom navigation on compact layouts
+  - responsive content widths for Home / Plan / Profile / Active Workout / Post Workout Summary pages
+  - preserved domain/business behavior parity for recommendation, plan and workout flows
+- `validation`:
+  - `flutter analyze`: passed
+  - `flutter test`: passed
+  - `python3 -m pytest -q`: passed
+- `notes`: Реализован web-friendly layout без изменения бизнес-правил мобильного UX.
+
 ---
 
 ## Current iteration

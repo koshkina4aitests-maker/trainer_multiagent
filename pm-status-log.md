@@ -77,4 +77,6 @@
 2026-03-31T12:30:00Z | iter-06b | Architect | Architecture update for web parity | done | requirements-iter05.md delta | architecture-iter05.md updated (mobile-web parity contract) | none | Frontend
 2026-03-31T12:40:00Z | iter-06b | QA | Regression validation after blocker fixes | done | flutter analyze, flutter test, python3 -m pytest -q | all checks passed | environment dependencies reinstalled in ephemeral agent | UX Tester
 2026-03-31T12:51:02Z | iter-06b | UX Tester | Strict UX re-test on blocker scope | done | code + flow review after commit 7597e34 | ux-retest-iter06-blockers.md | blockers closed; remaining medium polish backlog | Technical PM
+2026-03-31T12:59:38Z | iter-06c | Frontend | Web parity implementation (responsive shell/screens) | done | iter-06b web parity requirement + architecture contract | frontend-web-parity-iter06b.md, updates in app_router/home/plan/profile/workout pages | none | QA
+2026-03-31T13:00:00Z | iter-06c | QA | Cross-platform regression check (mobile+web code paths) | done | flutter analyze, flutter test, python3 -m pytest -q | all checks passed | none | Technical PM
 ```

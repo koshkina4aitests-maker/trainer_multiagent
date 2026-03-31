@@ -133,172 +133,180 @@ class _ProfileFormState extends State<_ProfileForm> {
 
   @override
   Widget build(BuildContext context) {
+    final isWide = MediaQuery.of(context).size.width >= 1000;
+    final content = Form(
+      key: _formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _AvatarSection(name: widget.profile.name),
+          const SizedBox(height: 24),
+          AppCard(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Личные данные', style: AppTextStyles.h4),
+                const SizedBox(height: 16),
+                TextFormField(
+                  controller: _nameCtrl,
+                  validator: (_) => null,
+                  decoration: const InputDecoration(labelText: 'Имя'),
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        controller: _ageCtrl,
+                        validator: Validators.age,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                        decoration: const InputDecoration(labelText: 'Возраст'),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: TextFormField(
+                        controller: _weightCtrl,
+                        keyboardType:
+                            const TextInputType.numberWithOptions(decimal: true),
+                        decoration: const InputDecoration(labelText: 'Вес (кг)'),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: TextFormField(
+                        controller: _heightCtrl,
+                        keyboardType:
+                            const TextInputType.numberWithOptions(decimal: true),
+                        decoration: const InputDecoration(labelText: 'Рост (см)'),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+          AppCard(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Стиль тренировок', style: AppTextStyles.h4),
+                const SizedBox(height: 12),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: _trainingStyles.map((style) {
+                    final selected = _trainingStyle == style;
+                    return FilterChip(
+                      label: Text(style == 'fullbody' ? 'Fullbody' : 'Split'),
+                      selected: selected,
+                      onSelected: (_) => setState(() => _trainingStyle = style),
+                      selectedColor: AppColors.primaryLight,
+                      checkmarkColor: AppColors.primary,
+                      labelStyle: AppTextStyles.body.copyWith(
+                        color: selected ? AppColors.primary : AppColors.text,
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+          AppCard(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Цель тренировок', style: AppTextStyles.h4),
+                const SizedBox(height: 12),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: _goals.map((g) {
+                    final selected = _goal == g;
+                    return FilterChip(
+                      label: Text(g),
+                      selected: selected,
+                      onSelected: (_) => setState(() => _goal = g),
+                      selectedColor: AppColors.primaryLight,
+                      checkmarkColor: AppColors.primary,
+                      labelStyle: AppTextStyles.body.copyWith(
+                        color: selected ? AppColors.primary : AppColors.text,
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+          AppCard(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Ограничения по здоровью', style: AppTextStyles.h4),
+                const SizedBox(height: 4),
+                Text(
+                  'Не является медицинской консультацией',
+                  style: AppTextStyles.caption.copyWith(color: AppColors.muted),
+                ),
+                const SizedBox(height: 12),
+                ..._healthOptions.map((opt) => CheckboxListTile(
+                      title: Text(opt, style: AppTextStyles.body),
+                      value: _healthLimits.contains(opt),
+                      onChanged: (v) => setState(() {
+                        if (v == true) {
+                          _healthLimits.add(opt);
+                        } else {
+                          _healthLimits.remove(opt);
+                        }
+                      }),
+                      activeColor: AppColors.primary,
+                      contentPadding: EdgeInsets.zero,
+                      dense: true,
+                    )),
+              ],
+            ),
+          ),
+          const SizedBox(height: 24),
+          BlocBuilder<ProfileCubit, ProfileState>(
+            builder: (context, state) {
+              return AppButton(
+                label: 'Сохранить изменения',
+                loading: state is ProfileSaving,
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    context.read<ProfileCubit>().save(
+                          widget.profile.copyWith(
+                            name: _nameCtrl.text.trim(),
+                            age: int.tryParse(_ageCtrl.text),
+                            weightKg: double.tryParse(
+                                _weightCtrl.text.replaceAll(',', '.')),
+                            heightCm: double.tryParse(
+                                _heightCtrl.text.replaceAll(',', '.')),
+                            goal: _goal,
+                            trainingStyle: _trainingStyle,
+                            healthLimits: _healthLimits.toList(),
+                          ),
+                        );
+                  }
+                },
+              );
+            },
+          ),
+          const SizedBox(height: 40),
+        ],
+      ),
+    );
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(AppSpacing.lg),
-      child: Form(
-        key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _AvatarSection(name: widget.profile.name),
-            const SizedBox(height: 24),
-            AppCard(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Личные данные', style: AppTextStyles.h4),
-                  const SizedBox(height: 16),
-                  TextFormField(
-                    controller: _nameCtrl,
-                    validator: (_) => null,
-                    decoration: const InputDecoration(labelText: 'Имя'),
-                  ),
-                  const SizedBox(height: 12),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          controller: _ageCtrl,
-                          validator: Validators.age,
-                          keyboardType: TextInputType.number,
-                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                          decoration: const InputDecoration(labelText: 'Возраст'),
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _weightCtrl,
-                          keyboardType:
-                              const TextInputType.numberWithOptions(decimal: true),
-                          decoration: const InputDecoration(labelText: 'Вес (кг)'),
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _heightCtrl,
-                          keyboardType:
-                              const TextInputType.numberWithOptions(decimal: true),
-                          decoration: const InputDecoration(labelText: 'Рост (см)'),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 16),
-            AppCard(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Стиль тренировок', style: AppTextStyles.h4),
-                  const SizedBox(height: 12),
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: _trainingStyles.map((style) {
-                      final selected = _trainingStyle == style;
-                      return FilterChip(
-                        label: Text(style == 'fullbody' ? 'Fullbody' : 'Split'),
-                        selected: selected,
-                        onSelected: (_) => setState(() => _trainingStyle = style),
-                        selectedColor: AppColors.primaryLight,
-                        checkmarkColor: AppColors.primary,
-                        labelStyle: AppTextStyles.body.copyWith(
-                          color: selected ? AppColors.primary : AppColors.text,
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 16),
-            AppCard(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Цель тренировок', style: AppTextStyles.h4),
-                  const SizedBox(height: 12),
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: _goals.map((g) {
-                      final selected = _goal == g;
-                      return FilterChip(
-                        label: Text(g),
-                        selected: selected,
-                        onSelected: (_) => setState(() => _goal = g),
-                        selectedColor: AppColors.primaryLight,
-                        checkmarkColor: AppColors.primary,
-                        labelStyle: AppTextStyles.body.copyWith(
-                          color: selected ? AppColors.primary : AppColors.text,
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 16),
-            AppCard(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Ограничения по здоровью', style: AppTextStyles.h4),
-                  const SizedBox(height: 4),
-                  Text(
-                    'Не является медицинской консультацией',
-                    style: AppTextStyles.caption.copyWith(color: AppColors.muted),
-                  ),
-                  const SizedBox(height: 12),
-                  ..._healthOptions.map((opt) => CheckboxListTile(
-                        title: Text(opt, style: AppTextStyles.body),
-                        value: _healthLimits.contains(opt),
-                        onChanged: (v) => setState(() {
-                          if (v == true) {
-                            _healthLimits.add(opt);
-                          } else {
-                            _healthLimits.remove(opt);
-                          }
-                        }),
-                        activeColor: AppColors.primary,
-                        contentPadding: EdgeInsets.zero,
-                        dense: true,
-                      )),
-                ],
-              ),
-            ),
-            const SizedBox(height: 24),
-            BlocBuilder<ProfileCubit, ProfileState>(
-              builder: (context, state) {
-                return AppButton(
-                  label: 'Сохранить изменения',
-                  loading: state is ProfileSaving,
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      context.read<ProfileCubit>().save(
-                            widget.profile.copyWith(
-                              name: _nameCtrl.text.trim(),
-                              age: int.tryParse(_ageCtrl.text),
-                              weightKg: double.tryParse(
-                                  _weightCtrl.text.replaceAll(',', '.')),
-                              heightCm: double.tryParse(
-                                  _heightCtrl.text.replaceAll(',', '.')),
-                              goal: _goal,
-                              trainingStyle: _trainingStyle,
-                              healthLimits: _healthLimits.toList(),
-                            ),
-                          );
-                    }
-                  },
-                );
-              },
-            ),
-            const SizedBox(height: 40),
-          ],
+      child: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: isWide ? 920 : 640),
+          child: content,
         ),
       ),
     );

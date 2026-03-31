@@ -60,6 +60,7 @@ class _ActiveWorkoutPageState extends State<ActiveWorkoutPage> {
           );
         }
         final session = state.session;
+        final isWide = MediaQuery.of(context).size.width >= 1000;
         return PopScope(
           canPop: false,
           onPopInvokedWithResult: (didPop, _) {
@@ -89,17 +90,41 @@ class _ActiveWorkoutPageState extends State<ActiveWorkoutPage> {
             body: Column(
               children: [
                 if (session.exercises.isNotEmpty) ...[
-                  _ExerciseTabBar(
-                    exercises: session.exercises,
-                    selectedIdx: _selectedExerciseIdx,
-                    onSelect: (i) => setState(() => _selectedExerciseIdx = i),
-                  ),
-                  Expanded(
-                    child: _ExercisePanel(
-                      session: session,
-                      exerciseIdx: _selectedExerciseIdx,
+                  if (isWide)
+                    Expanded(
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            width: 280,
+                            child: _ExerciseSideList(
+                              exercises: session.exercises,
+                              selectedIdx: _selectedExerciseIdx,
+                              onSelect: (i) => setState(() => _selectedExerciseIdx = i),
+                            ),
+                          ),
+                          const VerticalDivider(width: 1, color: AppColors.border),
+                          Expanded(
+                            child: _ExercisePanel(
+                              session: session,
+                              exerciseIdx: _selectedExerciseIdx,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  else ...[
+                    _ExerciseTabBar(
+                      exercises: session.exercises,
+                      selectedIdx: _selectedExerciseIdx,
+                      onSelect: (i) => setState(() => _selectedExerciseIdx = i),
                     ),
-                  ),
+                    Expanded(
+                      child: _ExercisePanel(
+                        session: session,
+                        exerciseIdx: _selectedExerciseIdx,
+                      ),
+                    ),
+                  ],
                 ] else
                   Expanded(
                     child: _FreeSessionPanel(session: session),
@@ -135,6 +160,51 @@ class _ActiveWorkoutPageState extends State<ActiveWorkoutPage> {
       context.go('/home');
     }
     return false;
+  }
+}
+
+class _ExerciseSideList extends StatelessWidget {
+  final List<ExerciseLog> exercises;
+  final int selectedIdx;
+  final ValueChanged<int> onSelect;
+
+  const _ExerciseSideList({
+    required this.exercises,
+    required this.selectedIdx,
+    required this.onSelect,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: AppColors.white,
+      child: ListView.builder(
+        itemCount: exercises.length,
+        itemBuilder: (context, i) {
+          final selected = i == selectedIdx;
+          final exercise = exercises[i];
+          return ListTile(
+            selected: selected,
+            selectedTileColor: AppColors.primaryLight,
+            leading: Icon(
+              exercise.sets.isNotEmpty ? Icons.check_circle : Icons.fitness_center,
+              color: exercise.sets.isNotEmpty ? AppColors.success : AppColors.primary,
+            ),
+            title: Text(
+              exercise.exerciseName,
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: selected ? AppColors.primaryDark : AppColors.text,
+              ),
+            ),
+            subtitle: Text(
+              '${exercise.sets.length} подходов',
+              style: AppTextStyles.caption,
+            ),
+            onTap: () => onSelect(i),
+          );
+        },
+      ),
+    );
   }
 }
 
