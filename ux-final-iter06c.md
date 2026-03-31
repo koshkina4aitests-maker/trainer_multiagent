@@ -4,6 +4,7 @@
 - deployed branch: `cursor/-bc-831ea3ed-7836-4c29-9827-ecb063ed9331-6179`
 - mobile artifact: `fitness_app-release-iter06c.apk`
 - web artifact: `/opt/fitness-app/web_build/web`
+- published web URL: `http://95.81.124.133:8080`
 - scope: blocker remediation + web parity release pass
 
 ## Sign-off checklist
@@ -20,6 +21,7 @@
    - backend health endpoint returns `ok`
    - worker health is `healthy`
    - deployed web bundle entry exists (`index.html`)
+   - external web URL responds `200 OK`
 
 ## Result
 - status: `done`

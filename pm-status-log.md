@@ -82,4 +82,5 @@
 2026-03-31T13:20:00Z | iter-06c | DevOps | Release artifact packaging | done | flutter build apk --release, flutter build web --release | fitness_app-release-iter06c.apk, fitness_app-web-iter06c.tar.gz, apk-build-iter06c.md, web-build-iter06c.md | none | DevOps
 2026-03-31T13:40:00Z | iter-06c | DevOps | Deploy latest branch + web bundle | done | /opt/fitness-app, SERVER_HOST/SERVER_USER/SERVER_PASSWORD | devops-deploy-iter06c.md | initial git fetch flaky network recovered on retry | UX Tester
 2026-03-31T13:58:35Z | iter-06c | UX Tester | Final sign-off (mobile+web release checks) | done | deployed backend + web artifact + release apk | ux-final-iter06c.md | none | Technical PM
+2026-03-31T14:05:00Z | iter-06c | DevOps | Publish web on dedicated port | done | deployed web bundle in /opt/fitness-app/web_build/web | devops-web-port-iter06c.md | nginx service exposed on 8080 and externally reachable | Technical PM
 ```

@@ -213,8 +213,13 @@
   - `web-build-iter06c.md`
   - `devops-deploy-iter06c.md`
   - `ux-final-iter06c.md`
+  - `devops-web-port-iter06c.md`
 - `mobile_release_apk`: `fitness_app-release-iter06c.apk`
 - `web_release_bundle`: `fitness_app-web-iter06c.tar.gz` (deployed to `/opt/fitness-app/web_build`)
+- `web_runtime_publish`:
+  - service: `nginx` via `docker-compose.web.yml`
+  - port: `8080`
+  - url: `http://95.81.124.133:8080`
 - `deployment`:
   - backend branch deployed: `cursor/-bc-831ea3ed-7836-4c29-9827-ecb063ed9331-6179`
   - API health: `ok`
