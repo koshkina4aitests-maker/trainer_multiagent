@@ -10,6 +10,7 @@ Focus areas:
 1. Profile improvements (name handling + training style)
 2. Recommendation flow enhancements (style selector + detailed prescription + copy-to-plan)
 3. Plan authoring/editing enhancements (exercise picker + set-level fields + editable recommendation)
+4. Web frontend parity with mobile functionality
 
 ## Prioritized requirements
 
@@ -68,6 +69,14 @@ Focus areas:
      - sets/reps/weight/RIR
    - **AC:** recommendation-derived plan item is fully editable.
 
+9. **Web frontend functional parity**
+   - Deliver web frontend behaviorally equivalent to mobile app for core flows:
+     - Profile (name logic + training style)
+     - Recommendations (style selector + detailed prescription + copy-to-plan)
+     - Plan (smart exercise picker + sets/reps/weight/RIR + edit recommendation-derived workout)
+     - Workout run flow (start, logging sets, completion summary)
+   - **AC:** all listed flows are available on web with same business rules, validations, and data persistence semantics.
+
 ### SHOULD
 1. **Profile defaults interplay**
    - If profile has `training_style`, preselect this value in recommendation style selector.
@@ -75,6 +84,8 @@ Focus areas:
    - Enforce numeric validation ranges for sets/reps/weight/RIR.
 3. **Consistency in all plan entry points**
    - Same exercise picker and set-level editor in add, edit, and recommendation-derived flows.
+4. **Cross-platform consistency**
+   - UI copy and state transitions remain consistent between mobile and web to avoid behavior divergence.
 
 ### COULD
 1. **Quick templates for style**
@@ -91,3 +102,4 @@ Focus areas:
 - Requires plan domain model extension for set-level prescription data.
 - Requires migration logic for old plan records without new fields.
 - Smart search quality depends on exercise library normalization.
+- Web parity requires responsive layout adaptations and additional QA matrix (desktop + tablet breakpoints).

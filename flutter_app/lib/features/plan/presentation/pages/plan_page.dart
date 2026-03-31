@@ -369,12 +369,22 @@ class _AddWorkoutSheetState extends State<_AddWorkoutSheet> {
             AppButton(
               label: 'Сохранить',
               onPressed: () {
-                if (_nameCtrl.text.isEmpty) return;
+                if (_nameCtrl.text.trim().isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Введите название тренировки')),
+                  );
+                  return;
+                }
                 final validItems = _items.where((i) => i.exerciseName.trim().isNotEmpty).toList();
-                if (validItems.isEmpty) return;
+                if (validItems.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Добавьте хотя бы одно упражнение')),
+                  );
+                  return;
+                }
                 context.read<PlanBloc>().add(PlanWorkoutAdded(PlannedWorkout(
                   id: '',
-                  name: _nameCtrl.text,
+                  name: _nameCtrl.text.trim(),
                   scheduledDate: _selectedDate,
                   style: RecommendationStyle.fullbody,
                   exerciseDetails: validItems.map((i) => i.toPlanItem()).toList(),

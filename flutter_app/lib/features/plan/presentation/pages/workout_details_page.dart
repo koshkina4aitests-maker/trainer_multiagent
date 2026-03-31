@@ -422,7 +422,6 @@ class _EditWorkoutSheetState extends State<_EditWorkoutSheet> {
                       ),
                     );
                 Navigator.of(context).pop();
-                Navigator.of(context).pop();
               },
             ),
           ],

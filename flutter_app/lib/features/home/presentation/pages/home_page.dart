@@ -206,6 +206,22 @@ class _RecommendationCard extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(rec.exerciseNames.take(3).join(' • '),
                     style: AppTextStyles.caption.copyWith(color: AppColors.muted)),
+                const SizedBox(height: 10),
+                ...rec.normalizedDetails.take(3).map(
+                      (d) => Padding(
+                        padding: const EdgeInsets.only(bottom: 4),
+                        child: Text(
+                          '${d.exerciseName}: ${d.sets}x${d.reps} • '
+                          '${d.weightKg.toStringAsFixed(1)} кг • RIR ${d.rir}',
+                          style: AppTextStyles.caption.copyWith(color: AppColors.text),
+                        ),
+                      ),
+                    ),
+                if (rec.normalizedDetails.length > 3)
+                  Text(
+                    '...и ещё ${rec.normalizedDetails.length - 3}',
+                    style: AppTextStyles.caption.copyWith(color: AppColors.muted),
+                  ),
                 if (rec.recommendationReason != null) ...[
                   const SizedBox(height: 12),
                   Container(
@@ -248,10 +264,11 @@ class _RecommendationCard extends StatelessWidget {
                       child: AppButton(
                         label: 'Начать',
                         onPressed: () {
+                          final details = rec.normalizedDetails;
                           context.read<WorkoutBloc>().add(WorkoutStartRequested(
                                 rec.name,
-                                [],
-                                rec.exerciseNames,
+                                details.map((d) => d.exerciseId).toList(),
+                                details.map((d) => d.exerciseName).toList(),
                               ));
                           context.push('/workout/active');
                         },

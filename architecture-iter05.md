@@ -80,6 +80,7 @@
 - Search response target: < 150ms p95 for local index.
 - No regression on recommendation card render latency > +100ms.
 - Backward compatibility for legacy plan records preserved.
+- Web parity requirement: feature behavior and business rules must be consistent between mobile and web surfaces for Profile / Recommendations / Plan flows.
 
 ## Handoff
 - Backend:
@@ -92,3 +93,21 @@
   - implement copy-to-plan and editable plan form with smart exercise picker.
 - Designer:
   - define compact UI patterns for prescription table rows and smart search dropdown states.
+
+## Additional requirement — Web frontend parity
+- Add frontend web implementation with functional parity to mobile release scope:
+  1. Profile:
+     - empty/default name behavior aligned with mobile,
+     - training style selector (`fullbody`, `split`) with persistence.
+  2. Recommendations:
+     - style selector (`fullbody`, `split_upper`, `split_lower`),
+     - detailed prescription preview (sets/reps/weight/RIR),
+     - copy-to-plan CTA with editable result.
+  3. Plan:
+     - smart searchable exercise picker,
+     - structured exercise fields (sets/reps/weight/RIR),
+     - recommendation-derived workout editing.
+- Contract rule:
+  - one source of truth for validation and domain constraints across mobile/web.
+- UX rule:
+  - web layouts can differ visually, but user intent, outcomes, and data semantics must match mobile behavior.
