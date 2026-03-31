@@ -369,40 +369,65 @@ class _EditWorkoutSheetState extends State<_EditWorkoutSheet> {
                   children: [
                     Text(item.exerciseName, style: AppTextStyles.bodyMedium),
                     const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _NumField(
-                            label: 'Подх',
+                    LayoutBuilder(
+                      builder: (context, constraints) {
+                        final fields = <Widget>[
+                          _NumField(
+                            label: 'Подходы',
                             initial: item.sets,
                             onChanged: (v) => _items[i] = item.copyWith(sets: v as int),
                           ),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: _NumField(
-                            label: 'Повт',
+                          _NumField(
+                            label: 'Повторы',
                             initial: item.reps,
                             onChanged: (v) => _items[i] = item.copyWith(reps: v as int),
                           ),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: _NumField(
-                            label: 'Вес',
+                          _NumField(
+                            label: 'Вес (кг)',
                             initial: item.weightKg,
                             onChanged: (v) => _items[i] = item.copyWith(weightKg: v as double),
                           ),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: _NumField(
+                          _NumField(
                             label: 'RIR',
                             initial: item.rir,
                             onChanged: (v) => _items[i] = item.copyWith(rir: v as int),
                           ),
-                        ),
-                      ],
+                        ];
+
+                        if (constraints.maxWidth < 560) {
+                          return Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Expanded(child: fields[0]),
+                                  const SizedBox(width: 8),
+                                  Expanded(child: fields[1]),
+                                ],
+                              ),
+                              const SizedBox(height: 8),
+                              Row(
+                                children: [
+                                  Expanded(child: fields[2]),
+                                  const SizedBox(width: 8),
+                                  Expanded(child: fields[3]),
+                                ],
+                              ),
+                            ],
+                          );
+                        }
+
+                        return Row(
+                          children: [
+                            Expanded(child: fields[0]),
+                            const SizedBox(width: 8),
+                            Expanded(child: fields[1]),
+                            const SizedBox(width: 8),
+                            Expanded(child: fields[2]),
+                            const SizedBox(width: 8),
+                            Expanded(child: fields[3]),
+                          ],
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -443,7 +468,10 @@ class _NumField extends StatelessWidget {
     return TextFormField(
       controller: controller,
       keyboardType: TextInputType.number,
-      decoration: InputDecoration(labelText: label),
+      decoration: InputDecoration(
+        labelText: label,
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+      ),
       onChanged: (v) {
         if (initial is int) {
           onChanged(int.tryParse(v) ?? initial);

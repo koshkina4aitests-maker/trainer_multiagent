@@ -83,4 +83,7 @@
 2026-03-31T13:40:00Z | iter-06c | DevOps | Deploy latest branch + web bundle | done | /opt/fitness-app, SERVER_HOST/SERVER_USER/SERVER_PASSWORD | devops-deploy-iter06c.md | initial git fetch flaky network recovered on retry | UX Tester
 2026-03-31T13:58:35Z | iter-06c | UX Tester | Final sign-off (mobile+web release checks) | done | deployed backend + web artifact + release apk | ux-final-iter06c.md | none | Technical PM
 2026-03-31T14:05:00Z | iter-06c | DevOps | Publish web on dedicated port | done | deployed web bundle in /opt/fitness-app/web_build/web | devops-web-port-iter06c.md | nginx service exposed on 8080 and externally reachable | Technical PM
+2026-03-31T14:40:00Z | iter-07 | UX Tester | Requirement intake for plan edit form readability | done | user request to fix clipped field labels in planned workout editor | ux-retest-iter07-plan-edit-layout.md | none | Frontend
+2026-03-31T14:48:00Z | iter-07 | Frontend | UI fix for planned workout edit field labels | done | workout_details_page bottom sheet layout | adaptive 2x2/4-column numeric fields + full labels + always-visible labels | none | QA
+2026-03-31T14:50:00Z | iter-07 | QA | Flutter regression after plan edit layout fix | done | flutter analyze, flutter test | all checks passed | none | Technical PM
 ```

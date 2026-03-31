@@ -228,6 +228,22 @@
   - mobile+web release candidate accepted for current scope
   - no blocking issues in final technical UX sign-off
 
+## Next cycle requirement intake (iter-07)
+- `status`: `in_progress`
+- `requirement_delta`:
+  - fix design in planned workout edit form so field labels are fully visible
+- `implementation`:
+  - updated `flutter_app/lib/features/plan/presentation/pages/workout_details_page.dart`
+  - replaced single-row 4-field layout with adaptive layout:
+    - narrow sheets: 2x2 grid (two rows)
+    - wide sheets: 4 fields in one row
+  - expanded labels from short abbreviations to full labels (`Подходы`, `Повторы`, `Вес (кг)`, `RIR`)
+  - set numeric field labels to always float for better readability
+- `validation`:
+  - `flutter analyze`: passed
+  - `flutter test`: passed
+- `ux_retest_artifact`: `ux-retest-iter07-plan-edit-layout.md`
+
 ---
 
 ## Current iteration
