@@ -307,6 +307,8 @@ class _EditWorkoutSheet extends StatefulWidget {
 }
 
 class _EditWorkoutSheetState extends State<_EditWorkoutSheet> {
+  int _newExerciseCounter = 1;
+
   late final TextEditingController _titleCtrl = TextEditingController(text: widget.workout.name);
   late final List<PlannedExerciseDetail> _items = widget.workout.normalizedDetails.isNotEmpty
       ? widget.workout.normalizedDetails
@@ -317,6 +319,7 @@ class _EditWorkoutSheetState extends State<_EditWorkoutSheet> {
                 reps: e.reps,
                 weightKg: e.weightKg,
                 rir: e.rir,
+                setDetails: e.normalizedSetDetails,
               ))
           .toList()
       : widget.workout.exerciseNames
@@ -367,7 +370,33 @@ class _EditWorkoutSheetState extends State<_EditWorkoutSheet> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(item.exerciseName, style: AppTextStyles.bodyMedium),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(item.exerciseName, style: AppTextStyles.bodyMedium),
+                        ),
+                        IconButton(
+                          tooltip: 'Удалить упражнение',
+                          icon: const Icon(Icons.delete_outline),
+                          onPressed: () {
+                            setState(() {
+                              _items.removeAt(i);
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    TextFormField(
+                      initialValue: item.exerciseName,
+                      decoration: const InputDecoration(labelText: 'Название упражнения'),
+                      onChanged: (v) {
+                        _items[i] = item.copyWith(
+                          exerciseName: v,
+                          exerciseId: v.trim().isEmpty ? item.exerciseId : _slugId(v),
+                        );
+                      },
+                    ),
                     const SizedBox(height: 8),
                     LayoutBuilder(
                       builder: (context, constraints) {
@@ -429,20 +458,63 @@ class _EditWorkoutSheetState extends State<_EditWorkoutSheet> {
                         );
                       },
                     ),
+                    const SizedBox(height: 8),
+                    _ExerciseSetsEditor(
+                      sets: item.normalizedSetDetails,
+                      onChanged: (updatedSets) {
+                        setState(() {
+                          final avgReps = (updatedSets.fold<int>(0, (sum, s) => sum + s.reps) /
+                                  updatedSets.length)
+                              .round();
+                          final avgWeight =
+                              updatedSets.fold<double>(0, (sum, s) => sum + s.weightKg) /
+                                  updatedSets.length;
+                          final avgRir = (updatedSets.fold<int>(0, (sum, s) => sum + s.rir) /
+                                  updatedSets.length)
+                              .round();
+                          _items[i] = item.copyWith(
+                            setDetails: updatedSets,
+                            sets: updatedSets.length,
+                            reps: avgReps,
+                            weightKg: avgWeight,
+                            rir: avgRir,
+                          );
+                        });
+                      },
+                    ),
                   ],
                 ),
               );
             }),
             const SizedBox(height: 8),
+            OutlinedButton.icon(
+              onPressed: _addExercise,
+              icon: const Icon(Icons.add),
+              label: const Text('Добавить упражнение'),
+            ),
+            const SizedBox(height: 8),
             AppButton(
               label: 'Сохранить',
               onPressed: () {
+                if (_items.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Добавьте хотя бы одно упражнение')),
+                  );
+                  return;
+                }
+                final validItems = _items.where((e) => e.exerciseName.trim().isNotEmpty).toList();
+                if (validItems.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Заполните название хотя бы одного упражнения')),
+                  );
+                  return;
+                }
                 context.read<PlanBloc>().add(
                       PlanWorkoutUpdated(
                         widget.workout.copyWith(
                           name: _titleCtrl.text.trim().isEmpty ? widget.workout.name : _titleCtrl.text.trim(),
-                          exerciseDetails: _items,
-                          exerciseNames: _items.map((e) => e.exerciseName).toList(),
+                          exerciseDetails: validItems,
+                          exerciseNames: validItems.map((e) => e.exerciseName).toList(),
                         ),
                       ),
                     );
@@ -453,6 +525,28 @@ class _EditWorkoutSheetState extends State<_EditWorkoutSheet> {
         ),
       ),
     );
+  }
+
+  void _addExercise() {
+    setState(() {
+      final name = 'Новое упражнение $_newExerciseCounter';
+      _newExerciseCounter += 1;
+      _items.add(
+        PlannedExerciseDetail(
+          exerciseId: _slugId(name),
+          exerciseName: name,
+          sets: 3,
+          reps: 10,
+          weightKg: 20,
+          rir: 2,
+        ),
+      );
+    });
+  }
+
+  String _slugId(String name) {
+    final cleaned = name.trim().toLowerCase().replaceAll(RegExp(r'[^a-zа-я0-9]+'), '-');
+    return cleaned.isEmpty ? 'custom-exercise' : 'custom-$cleaned';
   }
 }
 
@@ -477,6 +571,170 @@ class _NumField extends StatelessWidget {
           onChanged(int.tryParse(v) ?? initial);
         } else {
           onChanged(double.tryParse(v.replaceAll(',', '.')) ?? initial);
+        }
+      },
+    );
+  }
+}
+
+class _ExerciseSetsEditor extends StatelessWidget {
+  final List<PlannedSetDetail> sets;
+  final ValueChanged<List<PlannedSetDetail>> onChanged;
+
+  const _ExerciseSetsEditor({
+    required this.sets,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Подходы', style: AppTextStyles.bodyMedium),
+        const SizedBox(height: 6),
+        ...sets.asMap().entries.map((entry) {
+          final i = entry.key;
+          final set = entry.value;
+          return Container(
+            margin: const EdgeInsets.only(bottom: 8),
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              border: Border.all(color: AppColors.border),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Expanded(child: Text('Подход ${i + 1}', style: AppTextStyles.caption)),
+                    if (sets.length > 1)
+                      IconButton(
+                        tooltip: 'Удалить подход',
+                        icon: const Icon(Icons.remove_circle_outline, size: 20),
+                        onPressed: () {
+                          final updated = [...sets]..removeAt(i);
+                          onChanged(updated);
+                        },
+                      ),
+                  ],
+                ),
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    final repField = _SetNumField(
+                      label: 'Повторы',
+                      initial: set.reps,
+                      onChanged: (v) {
+                        final updated = [...sets];
+                        updated[i] = set.copyWith(reps: v as int);
+                        onChanged(updated);
+                      },
+                    );
+                    final weightField = _SetNumField(
+                      label: 'Вес (кг)',
+                      initial: set.weightKg,
+                      isDecimal: true,
+                      onChanged: (v) {
+                        final updated = [...sets];
+                        updated[i] = set.copyWith(weightKg: v as double);
+                        onChanged(updated);
+                      },
+                    );
+                    final rirField = _SetNumField(
+                      label: 'RIR',
+                      initial: set.rir,
+                      onChanged: (v) {
+                        final updated = [...sets];
+                        updated[i] = set.copyWith(rir: v as int);
+                        onChanged(updated);
+                      },
+                    );
+                    if (constraints.maxWidth < 560) {
+                      return Column(
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(child: repField),
+                              const SizedBox(width: 8),
+                              Expanded(child: weightField),
+                            ],
+                          ),
+                          const SizedBox(height: 8),
+                          Row(
+                            children: [
+                              Expanded(child: rirField),
+                              const Expanded(child: SizedBox.shrink()),
+                            ],
+                          ),
+                        ],
+                      );
+                    }
+                    return Row(
+                      children: [
+                        Expanded(child: repField),
+                        const SizedBox(width: 8),
+                        Expanded(child: weightField),
+                        const SizedBox(width: 8),
+                        Expanded(child: rirField),
+                      ],
+                    );
+                  },
+                ),
+              ],
+            ),
+          );
+        }),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: TextButton.icon(
+            onPressed: () {
+              final updated = [...sets];
+              final seed = updated.isNotEmpty
+                  ? updated.last
+                  : const PlannedSetDetail(reps: 10, weightKg: 20, rir: 2);
+              updated.add(seed);
+              onChanged(updated);
+            },
+            icon: const Icon(Icons.add),
+            label: const Text('Добавить подход'),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _SetNumField extends StatelessWidget {
+  final String label;
+  final num initial;
+  final bool isDecimal;
+  final ValueChanged<num> onChanged;
+
+  const _SetNumField({
+    required this.label,
+    required this.initial,
+    required this.onChanged,
+    this.isDecimal = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      initialValue: '$initial',
+      keyboardType: isDecimal
+          ? const TextInputType.numberWithOptions(decimal: true)
+          : TextInputType.number,
+      decoration: InputDecoration(
+        labelText: label,
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+      ),
+      onChanged: (v) {
+        if (isDecimal) {
+          onChanged(double.tryParse(v.replaceAll(',', '.')) ?? (initial as double));
+        } else {
+          onChanged(int.tryParse(v) ?? (initial as int));
         }
       },
     );

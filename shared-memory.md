@@ -244,6 +244,25 @@
   - `flutter test`: passed
 - `ux_retest_artifact`: `ux-retest-iter07-plan-edit-layout.md`
 
+## Next cycle requirement intake (iter-07b)
+- `status`: `in_progress`
+- `requirement_delta`:
+  - allow adding/removing exercises in recommendation-based planned workouts
+  - allow per-set configuration (different reps/weight/RIR for each set)
+- `implementation`:
+  - domain model extended:
+    - added `PlannedSetDetail` for per-set targets
+    - `PlannedExerciseDetail` now stores `setDetails` with backward-compatible normalization
+  - workout editor upgraded in `workout_details_page.dart`:
+    - add/remove exercise controls in edit sheet
+    - editable exercise name per row
+    - per-set editor: add/remove set and edit reps/weight/RIR for each set
+    - validation blocks save when all exercise names are empty
+- `validation`:
+  - `flutter analyze`: passed
+  - `flutter test`: passed
+- `ux_retest_artifact`: `ux-retest-iter07-plan-editor-sets.md`
+
 ---
 
 ## Current iteration

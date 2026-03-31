@@ -86,4 +86,7 @@
 2026-03-31T14:40:00Z | iter-07 | UX Tester | Requirement intake for plan edit form readability | done | user request to fix clipped field labels in planned workout editor | ux-retest-iter07-plan-edit-layout.md | none | Frontend
 2026-03-31T14:48:00Z | iter-07 | Frontend | UI fix for planned workout edit field labels | done | workout_details_page bottom sheet layout | adaptive 2x2/4-column numeric fields + full labels + always-visible labels | none | QA
 2026-03-31T14:50:00Z | iter-07 | QA | Flutter regression after plan edit layout fix | done | flutter analyze, flutter test | all checks passed | none | Technical PM
+2026-03-31T15:20:00Z | iter-07 | UX Tester | Requirement intake for recommendation-based planned workout editor enhancements | done | user request (add/remove exercises + per-set variability) | ux-retest-iter07-plan-editor-sets.md | none | Frontend
+2026-03-31T15:35:00Z | iter-07 | Frontend | Implement add/remove exercises and per-set targets in plan workout editor | done | workout_details_page.dart + plan domain model | exercise CRUD in editor + per-set reps/weight/RIR editor with add/remove set actions | none | QA
+2026-03-31T15:40:00Z | iter-07 | QA | Flutter regression after plan editor enhancements | done | flutter analyze, flutter test | all checks passed | none | Technical PM
 ```

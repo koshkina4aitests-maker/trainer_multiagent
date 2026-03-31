@@ -13,6 +13,44 @@ extension RecommendationStyleX on RecommendationStyle {
   }
 }
 
+class PlannedSetDetail {
+  final int reps;
+  final double weightKg;
+  final int rir;
+
+  const PlannedSetDetail({
+    required this.reps,
+    required this.weightKg,
+    required this.rir,
+  });
+
+  PlannedSetDetail copyWith({
+    int? reps,
+    double? weightKg,
+    int? rir,
+  }) {
+    return PlannedSetDetail(
+      reps: reps ?? this.reps,
+      weightKg: weightKg ?? this.weightKg,
+      rir: rir ?? this.rir,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'reps': reps,
+        'weightKg': weightKg,
+        'rir': rir,
+      };
+
+  factory PlannedSetDetail.fromJson(Map<String, dynamic> json) {
+    return PlannedSetDetail(
+      reps: json['reps'] ?? 10,
+      weightKg: (json['weightKg'] as num?)?.toDouble() ?? 20,
+      rir: json['rir'] ?? 2,
+    );
+  }
+}
+
 class PlannedExerciseDetail {
   final String exerciseId;
   final String exerciseName;
@@ -20,6 +58,7 @@ class PlannedExerciseDetail {
   final int reps;
   final double weightKg;
   final int rir;
+  final List<PlannedSetDetail> setDetails;
 
   const PlannedExerciseDetail({
     required this.exerciseId,
@@ -28,6 +67,7 @@ class PlannedExerciseDetail {
     required this.reps,
     required this.weightKg,
     required this.rir,
+    this.setDetails = const [],
   });
 
   PlannedExerciseDetail copyWith({
@@ -37,6 +77,7 @@ class PlannedExerciseDetail {
     int? reps,
     double? weightKg,
     int? rir,
+    List<PlannedSetDetail>? setDetails,
   }) {
     return PlannedExerciseDetail(
       exerciseId: exerciseId ?? this.exerciseId,
@@ -45,6 +86,15 @@ class PlannedExerciseDetail {
       reps: reps ?? this.reps,
       weightKg: weightKg ?? this.weightKg,
       rir: rir ?? this.rir,
+      setDetails: setDetails ?? this.setDetails,
+    );
+  }
+
+  List<PlannedSetDetail> get normalizedSetDetails {
+    if (setDetails.isNotEmpty) return setDetails;
+    return List.generate(
+      sets,
+      (_) => PlannedSetDetail(reps: reps, weightKg: weightKg, rir: rir),
     );
   }
 
@@ -55,16 +105,31 @@ class PlannedExerciseDetail {
         'reps': reps,
         'weightKg': weightKg,
         'rir': rir,
+        'setDetails': normalizedSetDetails.map((s) => s.toJson()).toList(),
       };
 
   factory PlannedExerciseDetail.fromJson(Map<String, dynamic> json) {
+    final setDetails = ((json['setDetails'] ?? []) as List)
+        .map((e) => PlannedSetDetail.fromJson(e))
+        .toList();
+    final safeSetCount = setDetails.isNotEmpty ? setDetails.length : (json['sets'] ?? 3);
+    final avgReps = setDetails.isNotEmpty
+        ? (setDetails.fold<int>(0, (sum, s) => sum + s.reps) / setDetails.length).round()
+        : (json['reps'] ?? 10);
+    final avgWeight = setDetails.isNotEmpty
+        ? setDetails.fold<double>(0, (sum, s) => sum + s.weightKg) / setDetails.length
+        : (json['weightKg'] as num?)?.toDouble() ?? 20;
+    final avgRir = setDetails.isNotEmpty
+        ? (setDetails.fold<int>(0, (sum, s) => sum + s.rir) / setDetails.length).round()
+        : (json['rir'] ?? 2);
     return PlannedExerciseDetail(
       exerciseId: json['exerciseId'] ?? '',
       exerciseName: json['exerciseName'] ?? '',
-      sets: json['sets'] ?? 3,
-      reps: json['reps'] ?? 10,
-      weightKg: (json['weightKg'] as num?)?.toDouble() ?? 20,
-      rir: json['rir'] ?? 2,
+      sets: safeSetCount,
+      reps: avgReps,
+      weightKg: avgWeight,
+      rir: avgRir,
+      setDetails: setDetails,
     );
   }
 }
