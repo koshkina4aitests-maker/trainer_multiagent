@@ -6,6 +6,7 @@ class AuthLocalDatasource {
 
   String? getToken() => _storage.authToken;
   Future<void> saveToken(String token) => _storage.setAuthToken(token);
+  Future<void> saveGoogleSub(String googleSub) => _storage.setGoogleSub(googleSub);
   Future<void> saveUserId(String id) => _storage.setUserId(id);
   Future<void> saveUserName(String name) => _storage.setUserName(name);
   Future<void> saveUserEmail(String email) => _storage.setUserEmail(email);
@@ -15,5 +16,6 @@ class AuthLocalDatasource {
         'id': _storage.userId,
         'name': _storage.userName,
         'email': _storage.userEmail,
+        'google_sub': _storage.googleSub,
       };
 }

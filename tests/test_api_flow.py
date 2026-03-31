@@ -1,4 +1,4 @@
-def test_core_mvp_flow() -> None:
+def test_core_mvp_flow(monkeypatch) -> None:
     from uuid import uuid4
 
     from fastapi.testclient import TestClient
@@ -12,13 +12,22 @@ def test_core_mvp_flow() -> None:
 
     idempotency_prefix = f"idem-{suffix}"
 
+    from app.services.google_auth import GoogleIdentity
+
+    def _fake_verify(_: str) -> GoogleIdentity:
+        return GoogleIdentity(
+            google_sub=google_sub,
+            email=email,
+            full_name="Test User",
+        )
+
+    monkeypatch.setattr("app.services.auth_service.verify_google_id_token", _fake_verify)
+
     with TestClient(app) as client:
         auth_resp = client.post(
             "/v1/auth/google",
             json={
-                "email": email,
-                "full_name": "Test User",
-                "google_sub": google_sub,
+                "id_token": "test-id-token-0123456789",
             },
         )
         assert auth_resp.status_code == 200

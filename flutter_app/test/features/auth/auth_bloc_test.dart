@@ -14,12 +14,15 @@ class MockAuthRepository extends Mock implements AuthRepository {}
 class MockSignInWithGoogle extends Mock implements SignInWithGoogle {}
 class MockSignOutUseCase extends Mock implements SignOutUseCase {}
 
+class _FakeGoogleSignInRequested extends Fake implements GoogleSignInRequested {}
+
 void main() {
   late MockAuthRepository mockRepo;
   late MockSignInWithGoogle mockSignIn;
   late MockSignOutUseCase mockSignOut;
 
   setUp(() {
+    registerFallbackValue(_FakeGoogleSignInRequested());
     mockRepo = MockAuthRepository();
     mockSignIn = MockSignInWithGoogle();
     mockSignOut = MockSignOutUseCase();

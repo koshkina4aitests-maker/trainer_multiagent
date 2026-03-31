@@ -263,6 +263,32 @@
   - `flutter test`: passed
 - `ux_retest_artifact`: `ux-retest-iter07-plan-editor-sets.md`
 
+## Next cycle requirement intake (iter-08)
+- `status`: `in_progress`
+- `requirement_delta`:
+  - implement production-grade Google authentication flow
+- `implementation`:
+  - backend:
+    - switched `/v1/auth/google` request payload to `id_token`
+    - added Google ID token verification service (`app/services/google_auth.py`)
+    - validates token audience against configured OAuth client IDs
+    - auth service now upserts user from verified token claims (`sub`, `email`, `name`)
+    - dev/test bypass supported with `FITNESS_GOOGLE_AUTH_ALLOW_FAKE=true`
+  - flutter:
+    - integrated `google_sign_in` and backend auth call via `http`
+    - added API config (`API_BASE_URL`, `GOOGLE_WEB_CLIENT_ID`) in `app_config.dart`
+    - auth repository now obtains Google `idToken` and exchanges it with backend
+    - updated DI for `GoogleSignIn`, remote datasource, and HTTP client
+    - auth events/UI wired to real sign-in flow
+  - tests:
+    - backend integration test updated to monkeypatch token verification and use `id_token`
+    - auth bloc tests adapted to updated sign-in event contract
+- `validation`:
+  - `python3 -m pytest -q`: passed
+  - `flutter analyze`: passed
+  - `flutter test`: passed
+- `artifact`: `auth-google-iter08.md`
+
 ---
 
 ## Current iteration

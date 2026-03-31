@@ -5,22 +5,24 @@ from sqlalchemy.orm import Session
 
 from app.domain.models import User
 from app.schemas.auth import GoogleSignInRequest
+from app.services.google_auth import GoogleIdentity, verify_google_id_token
 
 
 def google_sign_in(session: Session, payload: GoogleSignInRequest) -> tuple[User, str]:
-    user = session.scalar(select(User).where(User.google_sub == payload.google_sub))
+    identity: GoogleIdentity = verify_google_id_token(payload.id_token)
+    user = session.scalar(select(User).where(User.google_sub == identity.google_sub))
     if user is None:
         user = User(
-            email=payload.email,
-            full_name=payload.full_name,
-            google_sub=payload.google_sub,
+            email=identity.email,
+            full_name=identity.full_name,
+            google_sub=identity.google_sub,
         )
         session.add(user)
         session.commit()
         session.refresh(user)
     else:
-        user.email = payload.email
-        user.full_name = payload.full_name
+        user.email = identity.email
+        user.full_name = identity.full_name
         session.commit()
         session.refresh(user)
 

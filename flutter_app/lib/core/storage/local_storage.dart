@@ -18,6 +18,7 @@ class LocalStorage {
   static const String _keyUserHeight = 'user_height';
   static const String _keyUserGender = 'user_gender';
   static const String _keyTrainingStyle = 'training_style';
+  static const String _keyGoogleSub = 'google_sub';
 
   String? get authToken => _prefs.getString(_keyAuthToken);
   Future<void> setAuthToken(String token) => _prefs.setString(_keyAuthToken, token);
@@ -31,6 +32,9 @@ class LocalStorage {
 
   String? get userEmail => _prefs.getString(_keyUserEmail);
   Future<void> setUserEmail(String email) => _prefs.setString(_keyUserEmail, email);
+
+  String? get googleSub => _prefs.getString(_keyGoogleSub);
+  Future<void> setGoogleSub(String sub) => _prefs.setString(_keyGoogleSub, sub);
 
   bool get isOnboardingDone => _prefs.getBool(_keyOnboardingDone) ?? false;
   Future<void> setOnboardingDone() => _prefs.setBool(_keyOnboardingDone, true);

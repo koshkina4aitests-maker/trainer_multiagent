@@ -27,7 +27,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(AuthUnauthenticated());
   }
 
-  Future<void> _onSignIn(GoogleSignInRequested event, Emitter<AuthState> emit) async {
+  Future<void> _onSignIn(
+    GoogleSignInRequested event,
+    Emitter<AuthState> emit,
+  ) async {
     emit(AuthLoading());
     try {
       final user = await _signIn();

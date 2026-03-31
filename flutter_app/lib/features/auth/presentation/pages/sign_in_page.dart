@@ -55,7 +55,9 @@ class SignInPage extends StatelessWidget {
                           label: 'Войти через Google',
                           loading: state is AuthLoading,
                           onPressed: () {
-                            context.read<AuthBloc>().add(GoogleSignInRequested());
+                            context.read<AuthBloc>().add(
+                                  GoogleSignInRequested(),
+                                );
                           },
                           icon: const Icon(Icons.login, color: Colors.white, size: 18),
                         ),
@@ -63,9 +65,13 @@ class SignInPage extends StatelessWidget {
                         AppButton(
                           label: 'Создать аккаунт',
                           style: AppButtonStyle.secondary,
-                          onPressed: state is AuthLoading ? null : () {
-                            context.read<AuthBloc>().add(GoogleSignInRequested());
-                          },
+                          onPressed: state is AuthLoading
+                              ? null
+                              : () {
+                                  context.read<AuthBloc>().add(
+                                        GoogleSignInRequested(),
+                                      );
+                                },
                         ),
                       ],
                     );

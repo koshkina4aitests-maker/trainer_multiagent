@@ -89,4 +89,8 @@
 2026-03-31T15:20:00Z | iter-07 | UX Tester | Requirement intake for recommendation-based planned workout editor enhancements | done | user request (add/remove exercises + per-set variability) | ux-retest-iter07-plan-editor-sets.md | none | Frontend
 2026-03-31T15:35:00Z | iter-07 | Frontend | Implement add/remove exercises and per-set targets in plan workout editor | done | workout_details_page.dart + plan domain model | exercise CRUD in editor + per-set reps/weight/RIR editor with add/remove set actions | none | QA
 2026-03-31T15:40:00Z | iter-07 | QA | Flutter regression after plan editor enhancements | done | flutter analyze, flutter test | all checks passed | none | Technical PM
+2026-03-31T16:20:00Z | iter-08 | UX Tester | Requirement intake for production-grade Google authentication | done | user request to implement real Google auth | auth-google-iter08.md | none | Backend + Frontend
+2026-03-31T16:35:00Z | iter-08 | Backend | Google ID token verification integration | done | /v1/auth/google contract update + google-auth verifier | app/services/google_auth.py, app/services/auth_service.py, app/schemas/auth.py | tests adapted with verifier monkeypatch for deterministic CI | Frontend
+2026-03-31T16:50:00Z | iter-08 | Frontend | Real Google Sign-In integration (client + backend exchange) | done | google_sign_in package + auth remote datasource | service_locator/auth_repository/auth_remote_datasource updated, UI sign-in flows wired to real OAuth | requires runtime OAuth client ID config for production domains | QA
+2026-03-31T16:55:00Z | iter-08 | QA | Full auth regression (backend + flutter) | done | python3 -m pytest -q, flutter analyze, flutter test | all checks passed | none | Technical PM
 ```
