@@ -72,4 +72,9 @@
 2026-03-29T15:55:00Z | iter-06 | UX Tester | Final UX regression | done | iter-06 feature build + release APK | ux-final-iter06.md | non-blocking polish notes only | Technical PM
 2026-03-29T15:56:00Z | iter-06 | Technical PM | Iteration closure | done | iter-06 artifacts | iteration-close-note-iter06 | none | Business Analyst
 2026-03-29T18:53:42Z | iter-06 | UX Tester | Strict UX audit (maximum scrutiny) | done | fitness_app-release-iter06.apk, source code walkthrough | ux-strict-iter06.md | 1 critical + 3 high + 3 medium + 1 low identified | Technical PM
+2026-03-31T12:10:00Z | iter-06b | Frontend | Corrective implementation for strict UX blockers | done | ux-strict-iter06.md findings, user instruction | commit 7597e34 (recommendation start IDs, recommendation details, plan save feedback, edit-sheet nav fix) | none | QA
+2026-03-31T12:20:00Z | iter-06b | Business Analyst | Requirement extension (web parity) | done | user instruction on web analog functionality | requirements-iter05.md updated (web parity MUST) | none | Architect
+2026-03-31T12:30:00Z | iter-06b | Architect | Architecture update for web parity | done | requirements-iter05.md delta | architecture-iter05.md updated (mobile-web parity contract) | none | Frontend
+2026-03-31T12:40:00Z | iter-06b | QA | Regression validation after blocker fixes | done | flutter analyze, flutter test, python3 -m pytest -q | all checks passed | environment dependencies reinstalled in ephemeral agent | UX Tester
+2026-03-31T12:51:02Z | iter-06b | UX Tester | Strict UX re-test on blocker scope | done | code + flow review after commit 7597e34 | ux-retest-iter06-blockers.md | blockers closed; remaining medium polish backlog | Technical PM
 ```

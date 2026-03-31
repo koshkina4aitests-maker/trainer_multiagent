@@ -179,6 +179,19 @@
 - `verdict`: `failed_with_blockers`
 - `notes`: Выявлены критичные UX-риски в core-flow рекомендаций/плана (несоответствие запуска рекомендованной тренировки фактическому составу упражнений, silent failure и навигационные сбои). Требуется corrective iteration.
 
+## Corrective iteration for strict UX blockers (iter-06)
+- `status`: `done`
+- `source_commit`: `7597e34`
+- `changes`:
+  - recommendation start flow now passes normalized exercise ids/names
+  - recommendation card shows sets/reps/weight/RIR preview
+  - plan add form now shows explicit snackbar feedback on invalid save attempts
+  - workout edit save closes only editor sheet (no extra back navigation)
+  - requirement and architecture artifacts updated with web frontend parity requirement
+- `artifact`: `ux-retest-iter06-blockers.md`
+- `verdict`: `blockers_closed_code_review`
+- `notes`: Блокеры из strict UX-аудита закрыты на уровне реализованных code-path. Требуется следующий device-level regression pass для финального release sign-off.
+
 ---
 
 ## Current iteration
